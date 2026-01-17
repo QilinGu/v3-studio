@@ -260,37 +260,43 @@ export const VideoEditorComponent = ({ videoId, tour = false }: { videoId: strin
       return
     }
 
+    const isLargeScreen = window.innerWidth >= 1024; // lg breakpoint
+
+    const steps = [
+      {
+        element: '#auto-generate-button',
+        popover: {
+          title: 'Auto Generate',
+          description: 'Click this button to Auto Generate the entire video for you. You can also generate individual characters and the scenes all by yourself',
+          side: 'bottom' as const,
+          align: 'start' as const,
+        },
+      },
+      // Only show preview button step on smaller screens where the button is visible
+      ...(!isLargeScreen ? [{
+        element: '#preview-video-button',
+        popover: {
+          title: 'Preview Video',
+          description: 'Click this button to preview the generated video',
+          side: 'bottom' as const,
+          align: 'start' as const,
+        },
+      }] : []),
+      {
+        element: '#save-changes-button',
+        popover: {
+          title: 'Save Changes',
+          description: 'Do the changes in the scenes and Characters and Click this button to save your changes',
+          side: 'bottom' as const,
+          align: 'start' as const,
+        },
+      },
+    ];
+
     tourRef.current = driver({
       popoverClass: 'driverjs-theme',
       allowClose: false,
-      steps: [
-        {
-          element: '#auto-generate-button',
-          popover: {
-            title: 'Auto Generate',
-            description: 'Click this button to Auto Generate the entire video for you. You can also generate individual characters and the scenes all by yourself',
-            side: 'bottom',
-            align: 'start',
-          },
-        },
-        {
-          element: '#preview-video-button',
-          popover: {
-            title: 'Preview Video',
-            description: 'Click this button to preview the generated video',
-            side: 'bottom',
-            align: 'start',
-          },
-        },
-        {
-          element: '#save-changes-button',
-          popover: {
-            title: 'Save Changes',
-            description: 'Do the changes in the scenes and Characters and Click this button to save your changes',
-            side: 'bottom',
-            align: 'start',
-          },
-        }],
+      steps,
     });
 
     tourRef.current.drive();
@@ -958,7 +964,7 @@ export const VideoEditorComponent = ({ videoId, tour = false }: { videoId: strin
                     id='preview-video-button'
                     disabled={isSaving || isVideoLoading}
                     className={cn(
-                      "relative inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium",
+                      "relative lg:hidden inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium",
                       "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500",
                       "disabled:pointer-events-none disabled:opacity-50",
                       "h-9 py-2 px-5 rounded-md text-white overflow-hidden",
