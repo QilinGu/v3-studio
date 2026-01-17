@@ -1046,273 +1046,325 @@ export const VideoEditorComponent = ({ videoId, tour = false }: { videoId: strin
               </button>
             </div>
           </div>
-          {/* General Settings */}
-          {activeTab === 'Settings' && (
-            <>
-              <div className="bg-gradient-to-r from-[#1E1E2D] via-[#1A1A24] to-[#101014] rounded-xl mb-6 border border-white/10 overflow-hidden">
-                <button
-                  onClick={() => toggleSection('general')}
-                  className="w-full flex items-center justify-between p-6 hover:bg-white/5 transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <Settings className="w-5 h-5 text-purple-400" />
-                    <h2 className="text-xl font-bold text-white">General Settings</h2>
-                  </div>
-                  {expandedSections.general ? <ChevronUp className="w-5 h-5 text-purple-400" /> : <ChevronDown className="w-5 h-5 text-purple-400" />}
-                </button>
-
-                {expandedSections.general && (
-                  <div className="p-6 pt-0 space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="col-span-1 md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-300 mb-2">Initial Prompt</label>
-                        <textarea
-                          value={videoData.prompt}
-                          disabled
-                          rows={3}
-                          className="w-full bg-zinc-900 border border-zinc-800 rounded-md p-3 text-sm cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-pink-500 resize-none"
-                        />
-                      </div>
-                      <div className="col-span-1 md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-300 mb-2">Title</label>
-                        <input
-                          type="text"
-                          value={videoData.title || ''}
-                          onChange={(e) => updateField('title', e.target.value)}
-                          className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">Style</label>
-                        <input
-                          type="text"
-                          disabled
-                          value={videoData.style}
-                          onChange={(e) => updateField('style', e.target.value)}
-                          className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white cursor-not-allowed placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">Music</label>
-                        <select
-                          value={videoData.music?.title ?? 'none'}
-                          onChange={(e) => {
-                            const value = e.target.value;
-
-                            if (value === "none") {
-                              updateField("music", undefined);
-                              return;
-                            }
-
-                            const selected = musics.find(m => `${m.music.title}` === value);
-                            if (selected) {
-                              updateNestedField('music.title', selected.music.title);
-                              updateNestedField('music.previewUrl', selected.music.previewUrl);
-                            }
-                          }}
-                          className="w-full px-4 py-2 bg-white/5 cursor-pointer border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        >
-                          <option value="none" style={{ backgroundColor: "#1E1E2D", color: "white" }}>
-                            None
-                          </option>
-                          <option value="" disabled style={{ backgroundColor: '#1E1E2D', color: 'white' }}>Select Music</option>
-                          {musics.map((music) => (
-                            <option key={music.id} value={music.music.title} style={{ backgroundColor: '#1E1E2D', color: 'white' }}>
-                              {music.music.title}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">Aspect Ratio</label>
-                        <select
-                          value={videoData.aspectRatio}
-                          disabled
-                          onChange={(e) => updateField('aspectRatio', e.target.value)}
-                          className="w-full px-4 py-2 bg-white/5 cursor-not-allowed border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        >
-                          <option value="9:16" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>9:16 (Portrait)</option>
-                          <option value="16:9" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>16:9 (Landscape)</option>
-                          <option value="1:1" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>1:1 (Square)</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">Video Quality</label>
-                        <select
-                          value={videoData.resolution || '720p'}
-                          disabled
-                          onChange={(e) => updateField('resolution', e.target.value)}
-                          className="w-full px-4 py-2 bg-white/5 cursor-not-allowed border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        >
-                          <option value="480p" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>480p</option>
-                          <option value="720p" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>720p</option>
-                        </select>
-                      </div>
-                    </div>
-
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="col-span-1">
-                        <label className="block text-sm font-medium text-gray-300 mb-2">AI Video Model</label>
-                        <select
-                          value={videoData.videoGenerationModel?.category || 'standard'}
-                          disabled
-                          className="w-full px-4 py-2 bg-white/5 cursor-not-allowed border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        >
-                          <option value="standard" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>Standard Model</option>
-                          <option value="premium" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>Premium Model</option>
-                        </select>
-                      </div>
-                      <div className="col-span-1">
-                        <label className="block text-sm font-medium text-gray-300 mb-2">Voiceover</label>
-                        <select
-                          value={`${videoData.voice.name} (${videoData.voice.gender})`}
-                          onChange={(e) => {
-                            const selected = voices.find(v => `${v.voice.name} (${v.voice.gender})` === e.target.value);
-                            if (selected) {
-                              updateNestedField('voice.name', selected.voice.name);
-                              updateNestedField('voice.gender', selected.voice.gender);
-                              updateNestedField('voice.voiceId', selected.voice.voiceId);
-                              updateNestedField('voice.previewUrl', selected.voice.previewUrl);
-                            }
-                          }}
-                          className="w-full px-4 py-2 bg-white/5 cursor-pointer border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        >
-                          <option value="" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>Select Voice</option>
-                          {voices.map((voice) => (
-                            <option key={voice.id} value={`${voice.voice.name} (${voice.voice.gender})`} style={{ backgroundColor: '#1E1E2D', color: 'white' }}>
-                              {voice.voice.name} ({voice.voice.gender})
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-
-                    {/* <div className="flex items-center gap-2"> */}
-                    {/*   <input */}
-                    {/*     type="checkbox" */}
-                    {/*     checked={videoData.generateMultipleAngles} */}
-                    {/*     onChange={(e) => updateField('generateMultipleAngles', e.target.checked)} */}
-                    {/*     className="w-4 h-4 rounded border-white/10 bg-white/5 text-purple-500 focus:ring-2 focus:ring-purple-500" */}
-                    {/*   /> */}
-                    {/*   <label className="text-sm text-gray-300">Generate Multiple Angles</label> */}
-                    {/* </div> */}
-                  </div>
-                )}
-              </div>
-
-              {/* Characters */}
-              <div className="bg-gradient-to-r from-[#1E1E2D] via-[#1A1A24] to-[#101014] rounded-xl mb-6 border border-white/10 overflow-hidden">
-                <button
-                  onClick={() => toggleSection('characters')}
-                  className="w-full flex items-center justify-between p-6 hover:bg-white/5 transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <User className="w-5 h-5 text-purple-400" />
-                    <h2 className="text-xl font-bold text-white">Characters ({videoData.characters.length})</h2>
-                  </div>
-                  {expandedSections.characters ? <ChevronUp className="w-5 h-5 text-purple-400" /> : <ChevronDown className="w-5 h-5 text-purple-400" />}
-                </button>
-
-
-                {expandedSections.characters && (
-                  <div className="p-6 pt-0 space-y-6">
-                    {/* Grid of Character Cards */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6 m-4">
-                      {videoData.characters.map((character: any, index: number) => (
-                        <CharacterCard
-                          key={index}
-                          index={index}
-                          aspectRatio={videoData.aspectRatio}
-                          character={character}
-                          removeCharacter={removeCharacter}
-                          generateCharacterImage={generateCharacterImage}
-                          updateNestedField={updateNestedField}
-                          modifyPrompts={modifyPrompts}
-                          setModifyPrompts={setModifyPrompts}
-                          generatingCharacter={generatingCharacter}
-                          modifyingCharacter={modifyingCharacter}
-                        />
-                      ))}
-                      {/* Add Character Button */}
-                      <div
-                        className="min-h-[250px] flex flex-col items-center cursor-pointer justify-center text-muted-foreground bg-white/5 rounded-xl p-4 border border-white/10 hover:text-white"
-                        onClick={addCharacter}
-                      >
-                        <Plus className="w-10 h-10 mb-2" strokeWidth={2} />
-                        <span className="text-lg font-medium">Add Character</span>
-                      </div>
-                    </div>
-
-                  </div>
-                )}
-
-              </div>
-            </>
-          )}
-
-          {/* Scenes */}
-          {activeTab === 'Storyline' && (
-            <div className="bg-gradient-to-r from-[#1E1E2D] via-[#1A1A24] to-[#101014] rounded-xl mb-6 border border-white/10 overflow-hidden">
-              <button
-                onClick={() => toggleSection('scenes')}
-                className="w-full flex items-center justify-between p-6 hover:bg-white/5 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <ImagePlay className="w-5 h-5 text-purple-400" />
-                  <h2 className="text-xl font-bold text-white">Scenes ({videoData.scenes.length})</h2>
-                </div>
-                {expandedSections.scenes ? <ChevronUp className="w-5 h-5 text-purple-400" /> : <ChevronDown className="w-5 h-5 text-purple-400" />}
-              </button>
-
-              {expandedSections.scenes && (
-                <div className="p-6 pt-0 space-y-6">
-                  {/* Grid Layout for Scene Cards */}
-                  <div className={cn("grid grid-cols-1 gap-6", videoData.aspectRatio === '16:9' ? 'md:grid-cols-2 xl:grid-cols-3' : 'md:grid-cols-3 xl:grid-cols-4')}>
-                    {videoData.scenes.map((scene: any, sceneIndex: number) => (
-                      <DraggableSceneCard
-                        key={sceneIndex}
-                        index={sceneIndex}
-                        moveScene={moveScene}>
-                        <SceneCard
-                          key={sceneIndex}
-                          scene={scene}
-                          index={sceneIndex}
-                          expandedScenes={expandedScenes}
-                          expandedAngles={expandedAngles}
-                          toggleScene={toggleScene}
-                          toggleAngle={toggleAngle}
-                          removeScene={removeScene}
-                          removeAngle={removeAngle}
-                          addAngle={addAngle}
-                          updateNestedField={updateNestedField}
-                          generatingScene={generatingScene}
-                          modifyingScene={generatingScene}
-                          generateSceneImage={generateSceneImage}
-                          generateSceneVideo={generateSceneVideo}
-                          generateSceneAudio={generateSceneAudio}
-                          aspectRatio={videoData.aspectRatio}
-                          availableCharacters={videoData.characters.map(c => c.name)}
-                        />
-                      </DraggableSceneCard>
-                    ))}
-                    <div
-                      className={cn(
-                        "min-h-[320px] flex flex-col items-center justify-center",
-                        "text-muted-foreground bg-white/5 rounded-xl p-6 border border-white/10",
-                        "hover:text-white hover:bg-white/10 hover:border-white/20 cursor-pointer transition-all"
-                      )}
-                      onClick={() => addScene('end')}
+          {/* Main content with video preview */}
+          <div className={cn("lg:grid lg:gap-6", videoData.aspectRatio === '9:16' ? 'lg:grid-cols-[3fr_1fr]' : 'lg:grid-cols-2')}>
+            {/* Left side - Tab content */}
+            <div className="min-w-0">
+              {/* General Settings */}
+              {activeTab === 'Settings' && (
+                <>
+                  <div className="bg-gradient-to-r from-[#1E1E2D] via-[#1A1A24] to-[#101014] rounded-xl mb-6 border border-white/10 overflow-hidden">
+                    <button
+                      onClick={() => toggleSection('general')}
+                      className="w-full flex items-center justify-between p-6 hover:bg-white/5 transition-colors"
                     >
-                      <Plus className="w-12 h-12 mb-4" strokeWidth={2} />
-                      <span className="text-xl font-semibold">Add New Scene</span>
-                      <span className="text-sm mt-2 opacity-70">Click to create a new scene</span>
-                    </div>
+                      <div className="flex items-center gap-3">
+                        <Settings className="w-5 h-5 text-purple-400" />
+                        <h2 className="text-xl font-bold text-white">General Settings</h2>
+                      </div>
+                      {expandedSections.general ? <ChevronUp className="w-5 h-5 text-purple-400" /> : <ChevronDown className="w-5 h-5 text-purple-400" />}
+                    </button>
+
+                    {expandedSections.general && (
+                      <div className="p-6 pt-0 space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="col-span-1 md:col-span-2">
+                            <label className="block text-sm font-medium text-gray-300 mb-2">Initial Prompt</label>
+                            <textarea
+                              value={videoData.prompt}
+                              disabled
+                              rows={3}
+                              className="w-full bg-zinc-900 border border-zinc-800 rounded-md p-3 text-sm cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-pink-500 resize-none"
+                            />
+                          </div>
+                          <div className="col-span-1 md:col-span-2">
+                            <label className="block text-sm font-medium text-gray-300 mb-2">Title</label>
+                            <input
+                              type="text"
+                              value={videoData.title || ''}
+                              onChange={(e) => updateField('title', e.target.value)}
+                              className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-300 mb-2">Style</label>
+                            <input
+                              type="text"
+                              disabled
+                              value={videoData.style}
+                              onChange={(e) => updateField('style', e.target.value)}
+                              className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white cursor-not-allowed placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-300 mb-2">Music</label>
+                            <select
+                              value={videoData.music?.title ?? 'none'}
+                              onChange={(e) => {
+                                const value = e.target.value;
+
+                                if (value === "none") {
+                                  updateField("music", undefined);
+                                  return;
+                                }
+
+                                const selected = musics.find(m => `${m.music.title}` === value);
+                                if (selected) {
+                                  updateNestedField('music.title', selected.music.title);
+                                  updateNestedField('music.previewUrl', selected.music.previewUrl);
+                                }
+                              }}
+                              className="w-full px-4 py-2 bg-white/5 cursor-pointer border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            >
+                              <option value="none" style={{ backgroundColor: "#1E1E2D", color: "white" }}>
+                                None
+                              </option>
+                              <option value="" disabled style={{ backgroundColor: '#1E1E2D', color: 'white' }}>Select Music</option>
+                              {musics.map((music) => (
+                                <option key={music.id} value={music.music.title} style={{ backgroundColor: '#1E1E2D', color: 'white' }}>
+                                  {music.music.title}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-300 mb-2">Aspect Ratio</label>
+                            <select
+                              value={videoData.aspectRatio}
+                              disabled
+                              onChange={(e) => updateField('aspectRatio', e.target.value)}
+                              className="w-full px-4 py-2 bg-white/5 cursor-not-allowed border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            >
+                              <option value="9:16" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>9:16 (Portrait)</option>
+                              <option value="16:9" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>16:9 (Landscape)</option>
+                              <option value="1:1" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>1:1 (Square)</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-300 mb-2">Video Quality</label>
+                            <select
+                              value={videoData.resolution || '720p'}
+                              disabled
+                              onChange={(e) => updateField('resolution', e.target.value)}
+                              className="w-full px-4 py-2 bg-white/5 cursor-not-allowed border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            >
+                              <option value="480p" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>480p</option>
+                              <option value="720p" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>720p</option>
+                            </select>
+                          </div>
+                        </div>
+
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="col-span-1">
+                            <label className="block text-sm font-medium text-gray-300 mb-2">AI Video Model</label>
+                            <select
+                              value={videoData.videoGenerationModel?.category || 'standard'}
+                              disabled
+                              className="w-full px-4 py-2 bg-white/5 cursor-not-allowed border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            >
+                              <option value="standard" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>Standard Model</option>
+                              <option value="premium" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>Premium Model</option>
+                            </select>
+                          </div>
+                          <div className="col-span-1">
+                            <label className="block text-sm font-medium text-gray-300 mb-2">Voiceover</label>
+                            <select
+                              value={`${videoData.voice.name} (${videoData.voice.gender})`}
+                              onChange={(e) => {
+                                const selected = voices.find(v => `${v.voice.name} (${v.voice.gender})` === e.target.value);
+                                if (selected) {
+                                  updateNestedField('voice.name', selected.voice.name);
+                                  updateNestedField('voice.gender', selected.voice.gender);
+                                  updateNestedField('voice.voiceId', selected.voice.voiceId);
+                                  updateNestedField('voice.previewUrl', selected.voice.previewUrl);
+                                }
+                              }}
+                              className="w-full px-4 py-2 bg-white/5 cursor-pointer border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            >
+                              <option value="" style={{ backgroundColor: '#1E1E2D', color: 'white' }}>Select Voice</option>
+                              {voices.map((voice) => (
+                                <option key={voice.id} value={`${voice.voice.name} (${voice.voice.gender})`} style={{ backgroundColor: '#1E1E2D', color: 'white' }}>
+                                  {voice.voice.name} ({voice.voice.gender})
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+
+                        {/* <div className="flex items-center gap-2"> */}
+                        {/*   <input */}
+                        {/*     type="checkbox" */}
+                        {/*     checked={videoData.generateMultipleAngles} */}
+                        {/*     onChange={(e) => updateField('generateMultipleAngles', e.target.checked)} */}
+                        {/*     className="w-4 h-4 rounded border-white/10 bg-white/5 text-purple-500 focus:ring-2 focus:ring-purple-500" */}
+                        {/*   /> */}
+                        {/*   <label className="text-sm text-gray-300">Generate Multiple Angles</label> */}
+                        {/* </div> */}
+                      </div>
+                    )}
                   </div>
+
+                  {/* Characters */}
+                  <div className="bg-gradient-to-r from-[#1E1E2D] via-[#1A1A24] to-[#101014] rounded-xl mb-6 border border-white/10 overflow-hidden">
+                    <button
+                      onClick={() => toggleSection('characters')}
+                      className="w-full flex items-center justify-between p-6 hover:bg-white/5 transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <User className="w-5 h-5 text-purple-400" />
+                        <h2 className="text-xl font-bold text-white">Characters ({videoData.characters.length})</h2>
+                      </div>
+                      {expandedSections.characters ? <ChevronUp className="w-5 h-5 text-purple-400" /> : <ChevronDown className="w-5 h-5 text-purple-400" />}
+                    </button>
+
+
+                    {expandedSections.characters && (
+                      <div className="p-6 pt-0 space-y-6">
+                        {/* Grid of Character Cards */}
+                        <div className={cn("grid grid-cols-1 sm:grid-cols-3 gap-6 m-4", videoData.aspectRatio === '16:9' ? 'lg:grid-cols-1' : 'lg:grid-cols-2')}>
+                          {videoData.characters.map((character: any, index: number) => (
+                            <CharacterCard
+                              key={index}
+                              index={index}
+                              aspectRatio={videoData.aspectRatio}
+                              character={character}
+                              removeCharacter={removeCharacter}
+                              generateCharacterImage={generateCharacterImage}
+                              updateNestedField={updateNestedField}
+                              modifyPrompts={modifyPrompts}
+                              setModifyPrompts={setModifyPrompts}
+                              generatingCharacter={generatingCharacter}
+                              modifyingCharacter={modifyingCharacter}
+                            />
+                          ))}
+                          {/* Add Character Button */}
+                          <div
+                            className="min-h-[250px] flex flex-col items-center cursor-pointer justify-center text-muted-foreground bg-white/5 rounded-xl p-4 border border-white/10 hover:text-white"
+                            onClick={addCharacter}
+                          >
+                            <Plus className="w-10 h-10 mb-2" strokeWidth={2} />
+                            <span className="text-lg font-medium">Add Character</span>
+                          </div>
+                        </div>
+
+                      </div>
+                    )}
+
+                  </div>
+                </>
+              )}
+
+              {/* Scenes */}
+              {activeTab === 'Storyline' && (
+                <div className="bg-gradient-to-r from-[#1E1E2D] via-[#1A1A24] to-[#101014] rounded-xl mb-6 border border-white/10 overflow-hidden">
+                  <button
+                    onClick={() => toggleSection('scenes')}
+                    className="w-full flex items-center justify-between p-6 hover:bg-white/5 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <ImagePlay className="w-5 h-5 text-purple-400" />
+                      <h2 className="text-xl font-bold text-white">Scenes ({videoData.scenes.length})</h2>
+                    </div>
+                    {expandedSections.scenes ? <ChevronUp className="w-5 h-5 text-purple-400" /> : <ChevronDown className="w-5 h-5 text-purple-400" />}
+                  </button>
+
+                  {expandedSections.scenes && (
+                    <div className="p-6 pt-0 space-y-6">
+                      {/* Grid Layout for Scene Cards */}
+                      <div className={cn("grid grid-cols-1 gap-6", videoData.aspectRatio === '16:9' ? 'md:grid-cols-2 lg:grid-cols-1' : 'md:grid-cols-3 lg:grid-cols-2')}>
+                        {videoData.scenes.map((scene: any, sceneIndex: number) => (
+                          <DraggableSceneCard
+                            key={sceneIndex}
+                            index={sceneIndex}
+                            moveScene={moveScene}>
+                            <SceneCard
+                              key={sceneIndex}
+                              scene={scene}
+                              index={sceneIndex}
+                              expandedScenes={expandedScenes}
+                              expandedAngles={expandedAngles}
+                              toggleScene={toggleScene}
+                              toggleAngle={toggleAngle}
+                              removeScene={removeScene}
+                              removeAngle={removeAngle}
+                              addAngle={addAngle}
+                              updateNestedField={updateNestedField}
+                              generatingScene={generatingScene}
+                              modifyingScene={generatingScene}
+                              generateSceneImage={generateSceneImage}
+                              generateSceneVideo={generateSceneVideo}
+                              generateSceneAudio={generateSceneAudio}
+                              aspectRatio={videoData.aspectRatio}
+                              availableCharacters={videoData.characters.map(c => c.name)}
+                            />
+                          </DraggableSceneCard>
+                        ))}
+                        <div
+                          className={cn(
+                            "min-h-[320px] flex flex-col items-center justify-center",
+                            "text-muted-foreground bg-white/5 rounded-xl p-6 border border-white/10",
+                            "hover:text-white hover:bg-white/10 hover:border-white/20 cursor-pointer transition-all"
+                          )}
+                          onClick={() => addScene('end')}
+                        >
+                          <Plus className="w-12 h-12 mb-4" strokeWidth={2} />
+                          <span className="text-xl font-semibold">Add New Scene</span>
+                          <span className="text-sm mt-2 opacity-70">Click to create a new scene</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
-          )}
+            {/* Right side - Video Preview (large screens only) */}
+            <div className="hidden lg:flex lg:items-start lg:justify-center">
+              <div className="sticky top-4 w-full h-fit">
+                <div className="bg-gradient-to-r from-[#1E1E2D] via-[#1A1A24] to-[#101014] rounded-xl border border-white/10 overflow-hidden">
+                  <div className="p-4 border-b border-white/10">
+                    <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                      <Play className="w-4 h-4 text-purple-400" />
+                      Video Preview
+                    </h3>
+                  </div>
+                  <div className="p-4">
+                    <div className="relative w-full" style={{ aspectRatio: videoData.aspectRatio === '16:9' ? '16/9' : videoData.aspectRatio === '1:1' ? '1/1' : '9/16' }}>
+                      {isVideoLoading ? (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-lg">
+                          <div className="relative w-12 h-12">
+                            <div className="absolute inset-0 border-4 border-gray-200 rounded-full"></div>
+                            <div className="absolute inset-0 border-4 border-purple-500 rounded-full border-t-transparent animate-spin"></div>
+                          </div>
+                        </div>
+                      ) : localUrl ? (
+                        <video
+                          src={localUrl}
+                          controls
+                          loop
+                          className="rounded-lg w-full h-full object-contain bg-black"
+                        />
+                      ) : (
+                        <div className="w-full h-full">
+                          <VideoPlayer video={videoData} durationInSeconds={Math.round(durationInSeconds)} isSubscribed={!!user?.subscriptionProductId} />
+                        </div>
+                      )}
+                    </div>
+                    {!localUrl && (
+                      <div className="mt-4">
+                        <CaptionStyleControls
+                          value={videoData.captionStyle}
+                          updateCaptionStyleAction={(newStyle) =>
+                            updateField('captionStyle', newStyle)
+                          }
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <ConfirmDialog
