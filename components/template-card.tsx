@@ -131,7 +131,6 @@ export default function TemplateCard({ template, index }: { template: Template; 
         templateId,
         prompt,
         style: DEFAULT_TEMPLATE_PARAMS.style,
-        music: DEFAULT_TEMPLATE_PARAMS.music,
         voice: DEFAULT_TEMPLATE_PARAMS.voice,
         aspectRatio: DEFAULT_TEMPLATE_PARAMS.aspectRatio,
         durationInSecs: DEFAULT_TEMPLATE_PARAMS.durationInSecs,
