@@ -125,6 +125,7 @@ export const updateVideo = mutation({
 export const createInternalVideo = internalMutation({
   args: {
     userId: v.id('users'),
+    templateId: v.optional(v.string()),
     prompt: v.string(),
     style: styleValidator,
     music: v.optional(musicValidator),
@@ -144,6 +145,7 @@ export const createInternalVideo = internalMutation({
     const video = await ctx.db
       .insert('videos', {
         userId: args.userId,
+        templateId: args.templateId,
         prompt: args.prompt,
         style: args.style,
         music: args.music,

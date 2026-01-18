@@ -109,6 +109,7 @@ export const internalGenerateSceneVideo = internalAction({
       } : {
         image: args.baseImageUrl,
         prompt: buildPremiumVideoPrompt(args.prompt, scene.charactersInTheScene, video.characters),
+        aspectRatio: video.aspectRatio,
         resolution: video?.resolution || "720p",
       }
 

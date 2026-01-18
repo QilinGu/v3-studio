@@ -1,26 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import TemplateCard, { Template } from "@/components/template-card";
 import {
   Heart,
   Baby,
   PawPrint,
   Sparkles,
-  Play,
-  Clock,
-  TrendingUp
 } from "lucide-react";
 import Link from "next/link";
-
-type Template = {
-  id: string;
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  category: string;
-  examplePrompt: string;
-  trending?: boolean;
-};
 
 const templates: Template[] = [
   {
@@ -31,6 +19,7 @@ const templates: Template[] = [
     category: "Rescue Stories",
     examplePrompt: "A kind person rescues a scared puppy from a storm drain, nurturing it back to health with love and care.",
     trending: true,
+    sampleVideoUrl: "https://cdn.v3-studio.com/4hrm7foqkb/out.mp4",
   },
   {
     id: "animal-asking-help",
@@ -40,6 +29,7 @@ const templates: Template[] = [
     category: "Animal Stories",
     examplePrompt: "A mother cat leads a stranger to her trapped kittens, meowing desperately for help to free her babies.",
     trending: true,
+    sampleVideoUrl: "https://cdn.v3-studio.com/4hrm7foqkb/out.mp4",
   },
   {
     id: "animal-saving-humans",
@@ -48,6 +38,7 @@ const templates: Template[] = [
     icon: <Baby className="h-8 w-8 text-blue-400" />,
     category: "Hero Animals",
     examplePrompt: "A loyal dog protects a toddler from danger, barking to alert the parents and staying by the child's side.",
+    sampleVideoUrl: "https://cdn.v3-studio.com/4hrm7foqkb/out.mp4",
   },
   {
     id: "animal-friendship",
@@ -56,6 +47,7 @@ const templates: Template[] = [
     icon: <Sparkles className="h-8 w-8 text-purple-400" />,
     category: "Friendship",
     examplePrompt: "A gentle golden retriever becomes best friends with an orphaned kitten, caring for it like its own baby.",
+    sampleVideoUrl: "https://cdn.v3-studio.com/4hrm7foqkb/out.mp4",
   },
   {
     id: "lost-pet-reunion",
@@ -64,6 +56,7 @@ const templates: Template[] = [
     icon: <Heart className="h-8 w-8 text-pink-400" />,
     category: "Reunion Stories",
     examplePrompt: "After 3 years of searching, a family finally reunites with their lost dog at an animal shelter, tears of joy flowing.",
+    sampleVideoUrl: "https://cdn.v3-studio.com/4hrm7foqkb/out.mp4",
   },
   {
     id: "stray-transformation",
@@ -72,56 +65,9 @@ const templates: Template[] = [
     icon: <Sparkles className="h-8 w-8 text-green-400" />,
     category: "Transformation",
     examplePrompt: "A matted, scared stray dog is rescued from the streets and transformed into a healthy, happy pet with a loving family.",
+    sampleVideoUrl: "https://cdn.v3-studio.com/4hrm7foqkb/out.mp4",
   },
 ];
-
-function TemplateCard({ template }: { template: Template }) {
-  return (
-    <div className="group relative bg-gradient-to-br from-[#1E1E2D] via-[#1A1A24] to-[#101014] rounded-xl border border-white/10 p-6 hover:border-white/20 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10">
-      {template.trending && (
-        <div className="absolute top-4 right-4 flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-          <TrendingUp className="h-3 w-3" />
-          Trending
-        </div>
-      )}
-
-      <div className="flex items-start gap-4 mb-4">
-        <div className="p-3 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
-          {template.icon}
-        </div>
-        <div className="flex-1">
-          <span className="text-xs text-gray-400 uppercase tracking-wider">{template.category}</span>
-          <h3 className="text-lg font-semibold text-white mt-1">{template.title}</h3>
-        </div>
-      </div>
-
-      <p className="text-gray-400 text-sm leading-relaxed mb-4">
-        {template.description}
-      </p>
-
-      <div className="bg-white/5 rounded-lg p-3 mb-4">
-        <p className="text-xs text-gray-500 mb-1">Example prompt:</p>
-        <p className="text-sm text-gray-300 italic line-clamp-2">&quot;{template.examplePrompt}&quot;</p>
-      </div>
-
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-gray-500 text-xs">
-          <Clock className="h-3 w-3" />
-          <span>9:16 Shorts</span>
-        </div>
-        <Link href={`/ai-tools/ai-video?template=${template.id}`}>
-          <Button
-            size="sm"
-            className="bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white gap-2"
-          >
-            <Play className="h-4 w-4" />
-            Use Template
-          </Button>
-        </Link>
-      </div>
-    </div>
-  );
-}
 
 export default function TemplatesPage() {
   return (
@@ -151,9 +97,9 @@ export default function TemplatesPage() {
       </div>
 
       {/* Templates Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {templates.map((template) => (
-          <TemplateCard key={template.id} template={template} />
+      <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+        {templates.map((template, index) => (
+          <TemplateCard key={template.id} template={template} index={index} />
         ))}
       </div>
 

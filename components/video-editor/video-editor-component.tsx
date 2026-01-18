@@ -1325,7 +1325,7 @@ export const VideoEditorComponent = ({ videoId, tour = false }: { videoId: strin
               )}
             </div>
             {/* Right side - Video Preview (large screens only) */}
-            <div className="hidden lg:flex lg:items-start lg:justify-center">
+            <div className="hidden lg:flex lg:items-start lg:justify-center min-w-[500px]">
               <div className="sticky top-4 w-full h-fit">
                 <div className="bg-gradient-to-r from-[#1E1E2D] via-[#1A1A24] to-[#101014] rounded-xl border border-white/10 overflow-hidden">
                   <div className="p-4 border-b border-white/10">

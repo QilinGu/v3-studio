@@ -2,6 +2,7 @@
 
 import { GoogleGenAI } from "@google/genai";
 import { videoGenerationPrompt, videoGenerationPromptDramatic, videoGenerationPromptPremium, videoGenerationPromptPremiumDramatic } from "../helper";
+import { generateTemplatePrompt } from "../templateprompt";
 import { v } from "convex/values";
 import { action } from "../_generated/server";
 import { styleValidator, musicValidator, aspectRatioValidator, voiceValidator, videoResolutionValidator, videoGenerationModelSchema } from "../schema";
@@ -14,6 +15,7 @@ const genai = new GoogleGenAI({
 
 export const createVideoBlueprint = action({
   args: {
+    templateId: v.optional(v.string()),
     prompt: v.string(),
     style: styleValidator,
     music: v.optional(musicValidator),
@@ -50,9 +52,34 @@ export const createVideoBlueprint = action({
 
     const modelCategory = args?.videoGenerationModel?.category || 'standard';
 
-    const prompt = (modelCategory === 'standard') ? ((args.storyTellingStyle === 'dramatic') ? videoGenerationPromptDramatic(args.prompt, args.style, args.durationInSecs, args.aspectRatio) :
-      videoGenerationPrompt(args.prompt, args.style, args.durationInSecs, args.aspectRatio)) : ((args.storyTellingStyle === 'dramatic') ? videoGenerationPromptPremiumDramatic(args.prompt, args.style, args.durationInSecs, args.aspectRatio) :
-        videoGenerationPromptPremium(args.prompt, args.style, args.durationInSecs, args.aspectRatio));
+    // Check if templateId is provided and use template-specific prompt
+    let prompt: string;
+    if (args.templateId) {
+      const templatePrompt = generateTemplatePrompt(
+        args.templateId,
+        args.prompt,
+        args.style,
+        args.durationInSecs,
+        args.aspectRatio
+      );
+      if (templatePrompt) {
+        prompt = templatePrompt;
+      } else {
+        // Fallback to default prompt if template not found
+        prompt = (modelCategory === 'standard')
+          ? videoGenerationPrompt(args.prompt, args.style, args.durationInSecs, args.aspectRatio)
+          : videoGenerationPromptPremium(args.prompt, args.style, args.durationInSecs, args.aspectRatio);
+      }
+    } else {
+      // Use default prompts based on model category and storytelling style
+      prompt = (modelCategory === 'standard')
+        ? ((args.storyTellingStyle === 'dramatic')
+          ? videoGenerationPromptDramatic(args.prompt, args.style, args.durationInSecs, args.aspectRatio)
+          : videoGenerationPrompt(args.prompt, args.style, args.durationInSecs, args.aspectRatio))
+        : ((args.storyTellingStyle === 'dramatic')
+          ? videoGenerationPromptPremiumDramatic(args.prompt, args.style, args.durationInSecs, args.aspectRatio)
+          : videoGenerationPromptPremium(args.prompt, args.style, args.durationInSecs, args.aspectRatio));
+    }
 
     const response = await genai.models.generateContent({
       model: "gemini-2.5-flash",
@@ -63,21 +90,22 @@ export const createVideoBlueprint = action({
       throw new Error("No response from AI");
     }
 
+    console.log(response.text);
+
     const cleanJsonString = response.text
-      .replace(/^'```json\n'\s*\+\s*/g, '')  // Remove leading '```json\n' +
-      .replace(/\n\s*'```'$/g, '')            // Remove trailing '```'
-      .replace(/'\s*\+\s*'/g, '')             // Remove all ' + ' concatenations
-      .replace(/^'|'$/g, '')                  // Remove leading/trailing quotes
-      .replace(/\\n/g, '\n')                  // Convert escaped newlines
-      .replace(/\\`/g, '`')                   // Convert escaped backticks
-      .replace(/```json\s*/g, '')             // Remove ```json markers
-      .replace(/```\s*$/g, '')                // Remove closing ```
+      .replace(/^```json\s*\n?/g, '')         // Remove leading ```json
+      .replace(/\n?```\s*$/g, '')             // Remove trailing ```
       .trim();
+
+    console.log(cleanJsonString);
 
     const blueprint = JSON.parse(cleanJsonString);
 
+    console.log(blueprint);
+
     const video = await ctx.runMutation(internal.video.video.createInternalVideo, {
       userId: user._id,
+      templateId: args.templateId,
       prompt: args.prompt,
       style: args.style,
       music: args.music,

@@ -247,6 +247,8 @@ export default defineSchema({
   videos: defineTable({
     userId: v.id('users'),
 
+    templateId: v.optional(v.string()),
+
     autoGenerate: v.optional(v.boolean()),
     autoGenerateError: v.optional(v.string()),
     prompt: v.string(),
