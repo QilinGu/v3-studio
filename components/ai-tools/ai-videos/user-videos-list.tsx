@@ -58,7 +58,7 @@ export const UsersVideosList = () => {
         tourRef.current?.destroy();
       };
     }
-  }, [elementId, tour]);
+  }, [elementId, tour, videos]);
 
   const videos = useQuery(api.video.video.getVideos)
 
