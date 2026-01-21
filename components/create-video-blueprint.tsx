@@ -1126,7 +1126,7 @@ export const CreateVideoBlueprint = ({ tour = false }: { tour?: boolean }) => {
                        <Play className="w-8 h-8 text-pink-500" /> 
                      </div> 
                 </div> 
-               ) : ( */}
+               ) : ( 
                 <div className="w-16 h-16 rounded-full bg-zinc-700/50 flex items-center justify-center"> 
                     <Film className="w-8 h-8 text-zinc-500" /> 
                  </div> 
