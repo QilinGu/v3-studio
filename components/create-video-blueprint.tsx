@@ -1030,8 +1030,8 @@ export const CreateVideoBlueprint = ({ tour = false }: { tour?: boolean }) => {
       </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        {/* <DialogContent className={cn("max-w-[95svw] lg:max-w-[1200px] xl:max-w-[1400px] max-h-[90svh] overflow-auto p-0 bg-gradient-to-r from-[#1E1E2D] via-[#1A1A24] to-[#101014] backdrop-blur-xl border-zinc-800")}> */}
-        <DialogContent className={cn("max-w-[95svw] max-h-[90svh] overflow-auto p-0 bg-gradient-to-r from-[#1E1E2D] via-[#1A1A24] to-[#101014] backdrop-blur-xl border-zinc-800")}>
+        <DialogContent className={cn("max-w-[95svw] lg:max-w-[1200px] xl:max-w-[1400px] max-h-[90svh] overflow-auto p-0 bg-gradient-to-r from-[#1E1E2D] via-[#1A1A24] to-[#101014] backdrop-blur-xl border-zinc-800")}>
+        {/* <DialogContent className={cn("max-w-[95svw] max-h-[90svh] overflow-auto p-0 bg-gradient-to-r from-[#1E1E2D] via-[#1A1A24] to-[#101014] backdrop-blur-xl border-zinc-800")}> */}
           <DialogHeader className="px-6 pt-6 pb-4 border-b bg-red-500">
             <DialogTitle className="text-2xl font-bold flex items-center gap-2">
               <Film className="w-6 h-6" />
@@ -1118,21 +1118,21 @@ export const CreateVideoBlueprint = ({ tour = false }: { tour?: boolean }) => {
             </div>
 
             {/* Sample Video Preview - Only visible on lg screens and up */}
-            {/* <div className="hidden lg:flex lg:w-80 xl:w-96 items-center justify-center p-4 border-l border-zinc-800 bg-zinc-900/30"> */}
-            {/*   <div className="w-full h-full max-h-[70vh] aspect-[9/16] bg-zinc-800/50 rounded-lg border border-zinc-700 flex items-center justify-center overflow-hidden"> */}
-            {/*     {selectedStyle ? ( */}
-            {/*       <div className="w-full h-full flex items-center justify-center"> */}
-            {/*         <div className="w-16 h-16 rounded-full bg-pink-500/20 flex items-center justify-center"> */}
-            {/*           <Play className="w-8 h-8 text-pink-500" /> */}
-            {/*         </div> */}
-            {/*       </div> */}
-            {/*     ) : ( */}
-            {/*       <div className="w-16 h-16 rounded-full bg-zinc-700/50 flex items-center justify-center"> */}
-            {/*         <Film className="w-8 h-8 text-zinc-500" /> */}
-            {/*       </div> */}
-            {/*     )} */}
-            {/*   </div> */}
-            {/* </div> */}
+             <div className="hidden lg:flex lg:w-80 xl:w-96 items-center justify-center p-4 border-l border-zinc-800 bg-zinc-900/30"> 
+             <div className="w-full h-full max-h-[70vh] aspect-[9/16] bg-zinc-800/50 rounded-lg border border-zinc-700 flex items-center justify-center overflow-hidden"> 
+            {selectedStyle ? ( 
+             <div className="w-full h-full flex items-center justify-center"> 
+                     <div className="w-16 h-16 rounded-full bg-pink-500/20 flex items-center justify-center"> 
+                       <Play className="w-8 h-8 text-pink-500" /> 
+                     </div> 
+                </div> 
+               ) : ( */}
+                <div className="w-16 h-16 rounded-full bg-zinc-700/50 flex items-center justify-center"> 
+                    <Film className="w-8 h-8 text-zinc-500" /> 
+                 </div> 
+               )} 
+             </div> 
+             </div> 
           </div>
           {/* Loading overlay */}
           {isLoading && (
