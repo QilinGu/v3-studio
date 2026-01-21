@@ -62,22 +62,20 @@ export const UsersVideosList = () => {
 
   const videos = useQuery(api.video.video.getVideos)
 
-  // Loading state
-  if (videos === undefined) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh]">
+  return (
+    <div>
+      <div>
+        {/* Loading state */}
+        {videos === undefined && 
+          <div className="flex flex-col items-center justify-center min-h-[60vh]">
         <div className="relative w-16 h-16 mb-4">
           <div className="absolute inset-0 border-4 border-gray-200 rounded-full"></div>
           <div className="absolute inset-0 border-4 border-emerald-500 rounded-full border-t-transparent animate-spin"></div>
         </div>
         <p className="text-gray-500 text-lg">Loading your videos...</p>
       </div>
-    );
-  }
-
-  return (
-    <div>
-      <div>
+        }
+        
         {/* Page header */}
         <div className="flex justify-between items-center">
           <h2 className="font-bold text-2xl mb-2 mt-5">My Videos</h2>
@@ -89,7 +87,7 @@ export const UsersVideosList = () => {
         </div>
 
         {/* Empty state */}
-        {videos?.length === 0 && (
+        {videos && videos?.length === 0 && (
           <div className="flex flex-col items-center justify-center mt-20 text-center text-gray-400 border rounded-2xl p-10">
             <Image
               alt="No projects illustration"
