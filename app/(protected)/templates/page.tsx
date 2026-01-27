@@ -1,36 +1,36 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import TemplateCard, { Template } from "@/components/template-card";
 import {
   Heart,
   Baby,
   PawPrint,
   Sparkles,
-  Play,
-  Clock,
-  TrendingUp
+  Swords,
 } from "lucide-react";
 import Link from "next/link";
 
-type Template = {
-  id: string;
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  category: string;
-  examplePrompt: string;
-  trending?: boolean;
-};
-
 const templates: Template[] = [
+  {
+    id: "animal-encounters",
+    title: "Wildlife Animal Encounters",
+    description: "Dramatic BBC Earth style wildlife documentaries showing animals engaging with other animals. Cinematic, photorealistic footage with intense action.",
+    icon: <Swords className="h-8 w-8 text-orange-400" />,
+    category: "Wildlife Documentary",
+    examplePrompt: "Generate a unique, dramatic wildlife encounter between any two animals in their natural habitat. Choose different species each time - predators, prey, or unexpected encounters. Create a fresh scenario with unique animals, locations, and outcomes. The encounter should be intense, visually stunning, and tell a complete story of survival, competition, or coexistence in the wild.",
+    trending: true,
+    sampleVideoUrl: "https://cdn.v3-studio.com/4hrm7foqkb/out.mp4",
+  },
   {
     id: "human-rescuing-animals",
     title: "Human Rescuing Animals",
     description: "Heartwarming stories of humans saving animals in distress. Perfect for emotional, viral content that touches hearts.",
     icon: <Heart className="h-8 w-8 text-red-400" />,
     category: "Rescue Stories",
-    examplePrompt: "A kind person rescues a scared puppy from a storm drain, nurturing it back to health with love and care.",
+    examplePrompt: "Generate a unique, heartwarming rescue story. Choose any animal in distress - it could be a puppy, kitten, bird, deer, or any creature. Create a fresh scenario: trapped somewhere, injured, abandoned, or in danger. The rescuer could be anyone - a passerby, firefighter, child, or elderly person. Make each story original with different animals, situations, and emotional journeys from rescue to recovery.",
     trending: true,
+    sampleVideoUrl: "https://cdn.v3-studio.com/4hrm7foqkb/out.mp4",
   },
   {
     id: "animal-asking-help",
@@ -38,8 +38,9 @@ const templates: Template[] = [
     description: "Touching tales of animals approaching humans for help to save their babies or partners. Emotional storytelling at its best.",
     icon: <PawPrint className="h-8 w-8 text-amber-400" />,
     category: "Animal Stories",
-    examplePrompt: "A mother cat leads a stranger to her trapped kittens, meowing desperately for help to free her babies.",
+    examplePrompt: "Generate a unique story about an animal desperately seeking human help. Choose any animal - cat, dog, bird, fox, or other creature. Their loved ones could be trapped, injured, or in danger. Create a fresh scenario each time: babies stuck somewhere, partner hurt, family separated. Show the animal's intelligence and persistence in communicating their need, leading to a heartwarming rescue and reunion.",
     trending: true,
+    sampleVideoUrl: "https://cdn.v3-studio.com/4hrm7foqkb/out.mp4",
   },
   {
     id: "animal-saving-humans",
@@ -47,7 +48,8 @@ const templates: Template[] = [
     description: "Incredible stories of brave animals protecting and saving human babies or adults. Shows the beautiful bond between species.",
     icon: <Baby className="h-8 w-8 text-blue-400" />,
     category: "Hero Animals",
-    examplePrompt: "A loyal dog protects a toddler from danger, barking to alert the parents and staying by the child's side.",
+    examplePrompt: "Generate a unique hero animal story. Choose any protective animal - dog, cat, horse, dolphin, or other creature. The danger could be anything: a predator, fire, intruder, natural disaster, or accident. The human could be a baby, child, elderly person, or anyone vulnerable. Create a fresh scenario showing the animal's bravery, quick thinking, and selfless protection that saves a life.",
+    sampleVideoUrl: "https://cdn.v3-studio.com/4hrm7foqkb/out.mp4",
   },
   {
     id: "animal-friendship",
@@ -55,7 +57,8 @@ const templates: Template[] = [
     description: "Adorable stories of unexpected friendships between different animal species. Wholesome content that spreads joy.",
     icon: <Sparkles className="h-8 w-8 text-purple-400" />,
     category: "Friendship",
-    examplePrompt: "A gentle golden retriever becomes best friends with an orphaned kitten, caring for it like its own baby.",
+    examplePrompt: "Generate a unique unlikely friendship story between two different animal species. Choose any combination: dog and duck, cat and rabbit, horse and goat, lion and dog, elephant and sheep, or any surprising pair. One might be orphaned, lonely, or new. Create a fresh story showing how they meet, overcome their differences, and become inseparable best friends.",
+    sampleVideoUrl: "https://cdn.v3-studio.com/4hrm7foqkb/out.mp4",
   },
   {
     id: "lost-pet-reunion",
@@ -63,7 +66,8 @@ const templates: Template[] = [
     description: "Emotional reunion stories of pets finding their way back home or being reunited with their owners after years.",
     icon: <Heart className="h-8 w-8 text-pink-400" />,
     category: "Reunion Stories",
-    examplePrompt: "After 3 years of searching, a family finally reunites with their lost dog at an animal shelter, tears of joy flowing.",
+    examplePrompt: "Generate a unique lost pet reunion story. Choose any pet - dog, cat, bird, or other beloved animal. They could have been lost for days, months, or years. Create a fresh scenario: how they got separated (storm, accident, stolen, wandered off), the family's grief and hope, and the miraculous reunion. Each story should have different circumstances, time apart, and emotional reunion moments.",
+    sampleVideoUrl: "https://cdn.v3-studio.com/4hrm7foqkb/out.mp4",
   },
   {
     id: "stray-transformation",
@@ -71,57 +75,10 @@ const templates: Template[] = [
     description: "Before and after stories of stray animals being rescued, rehabilitated, and transformed with love and care.",
     icon: <Sparkles className="h-8 w-8 text-green-400" />,
     category: "Transformation",
-    examplePrompt: "A matted, scared stray dog is rescued from the streets and transformed into a healthy, happy pet with a loving family.",
+    examplePrompt: "Generate a unique stray animal transformation story. Choose any neglected animal - dog, cat, horse, or other creature. Their condition could vary: severely matted, malnourished, injured, or terrified. Create a fresh scenario with different rescuers, care journeys, and stunning before-and-after transformations. Show the physical and emotional healing as they find their forever home.",
+    sampleVideoUrl: "https://cdn.v3-studio.com/4hrm7foqkb/out.mp4",
   },
 ];
-
-function TemplateCard({ template }: { template: Template }) {
-  return (
-    <div className="group relative bg-gradient-to-br from-[#1E1E2D] via-[#1A1A24] to-[#101014] rounded-xl border border-white/10 p-6 hover:border-white/20 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10">
-      {template.trending && (
-        <div className="absolute top-4 right-4 flex items-center gap-1 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-          <TrendingUp className="h-3 w-3" />
-          Trending
-        </div>
-      )}
-
-      <div className="flex items-start gap-4 mb-4">
-        <div className="p-3 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
-          {template.icon}
-        </div>
-        <div className="flex-1">
-          <span className="text-xs text-gray-400 uppercase tracking-wider">{template.category}</span>
-          <h3 className="text-lg font-semibold text-white mt-1">{template.title}</h3>
-        </div>
-      </div>
-
-      <p className="text-gray-400 text-sm leading-relaxed mb-4">
-        {template.description}
-      </p>
-
-      <div className="bg-white/5 rounded-lg p-3 mb-4">
-        <p className="text-xs text-gray-500 mb-1">Example prompt:</p>
-        <p className="text-sm text-gray-300 italic line-clamp-2">&quot;{template.examplePrompt}&quot;</p>
-      </div>
-
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-gray-500 text-xs">
-          <Clock className="h-3 w-3" />
-          <span>9:16 Shorts</span>
-        </div>
-        <Link href={`/ai-tools/ai-video?template=${template.id}`}>
-          <Button
-            size="sm"
-            className="bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white gap-2"
-          >
-            <Play className="h-4 w-4" />
-            Use Template
-          </Button>
-        </Link>
-      </div>
-    </div>
-  );
-}
 
 export default function TemplatesPage() {
   return (
@@ -151,9 +108,9 @@ export default function TemplatesPage() {
       </div>
 
       {/* Templates Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {templates.map((template) => (
-          <TemplateCard key={template.id} template={template} />
+      <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+        {templates.map((template, index) => (
+          <TemplateCard key={template.id} template={template} index={index} />
         ))}
       </div>
 

@@ -23,6 +23,7 @@ import type * as prompt from "../prompt.js";
 import type * as render from "../render.js";
 import type * as storage from "../storage.js";
 import type * as suggestion from "../suggestion.js";
+import type * as templateprompt from "../templateprompt.js";
 import type * as user from "../user.js";
 import type * as validateWebhookSignature from "../validateWebhookSignature.js";
 import type * as video_autoGenerateVideo from "../video/autoGenerateVideo.js";
@@ -55,6 +56,7 @@ declare const fullApi: ApiFromModules<{
   render: typeof render;
   storage: typeof storage;
   suggestion: typeof suggestion;
+  templateprompt: typeof templateprompt;
   user: typeof user;
   validateWebhookSignature: typeof validateWebhookSignature;
   "video/autoGenerateVideo": typeof video_autoGenerateVideo;
