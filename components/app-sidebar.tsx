@@ -45,7 +45,7 @@ type MenuItem = {
 const creativeToolsItems: MenuItem[] = [
   { title: "Home", url: "/dashboard", icon: Home },
   { title: "AI Video", url: "/ai-tools/ai-video", icon: Clapperboard },
-  { title: "Templates", url: "/templates", icon: LayoutTemplate, badge: "New" },
+  // { title: "Templates", url: "/templates", icon: LayoutTemplate, badge: "New" },
   { title: "Product Ads", url: "/ai-tools/product-ads", icon: Package },
 ];
 

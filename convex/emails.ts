@@ -170,11 +170,11 @@ export const sendWelcomeEmail = internalAction({
             <li>Access to AI-powered short-form video generation</li>
             <li>Full control over your video creation process</li>
           </ul>
-          <p style="margin-top: 20px;">If at any point you need help or have questions, I'm happy to personally guide you—reach out to us at <a href="mailto:team@v3-studio.com" style="color: #4F46E5; text-decoration: none;">team@v3-studio.com</a> or use our <a href="https://www.v3-studio.com/contact" style="color: #4F46E5; text-decoration: none;">contact page</a>.</p>
+          <p style="margin-top: 20px;">If at any point you need help or have questions, I'm happy to personally guide you—reach out to us at <a href="mailto:team@v3-studio.com" style="color: #4F46E5; text-decoration: none;">team@v3-studio.com</a> or use our <a href="https://www.v3-studio.com/contact-us" style="color: #4F46E5; text-decoration: none;">contact page</a>.</p>
           <p>I'd love to hear your feedback as you try things out.</p>
           <p style="margin-top: 30px;">Warm regards,<br><strong>Debasish</strong><br><span style="color: #6B7280;">Creator of V3 Studio</span><br><a href="https://www.v3-studio.com" style="color: #4F46E5; text-decoration: none;">www.v3-studio.com</a></p>
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
-          <p style="color: #999; font-size: 12px;">Please do not reply to this email. For questions or feedback, contact us at <a href="mailto:team@v3-studio.com" style="color: #4F46E5;">team@v3-studio.com</a> or visit our <a href="https://www.v3-studio.com/contact" style="color: #4F46E5;">contact page</a>.</p>
+          <p style="color: #999; font-size: 12px;">Please do not reply to this email. For questions or feedback, contact us at <a href="mailto:team@v3-studio.com" style="color: #4F46E5;">team@v3-studio.com</a> or visit our <a href="https://www.v3-studio.com/contact-us" style="color: #4F46E5;">contact page</a>.</p>
         </div>
       </div>
     `;

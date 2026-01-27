@@ -65,6 +65,16 @@ export const addUser = action({
       polarCustomerId: polarCustomer.id,
     })
 
+    // Send welcome email to new user
+    if (identity.email) {
+      const userCount = await ctx.runQuery(internal.user.getUserCount);
+      await ctx.runAction(internal.emails.sendWelcomeEmail, {
+        email: identity.email,
+        name: identity.name || 'there',
+        userNumber: userCount,
+      });
+    }
+
     return newUser
   }
 })
@@ -151,6 +161,14 @@ export const getInternalUserByUserId = internalQuery({
     const user = await ctx.db.get(args.userId);
 
     return user;
+  }
+})
+
+export const getUserCount = internalQuery({
+  args: {},
+  handler: async (ctx): Promise<number> => {
+    const users = await ctx.db.query('users').collect();
+    return users.length;
   }
 })
 
