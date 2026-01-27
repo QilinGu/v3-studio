@@ -41,7 +41,7 @@ export interface TemplateVideoParams {
   }
 }
 
-// Default pre-defined parameters for template-based video generation
+// Default pre-defined parameters for template-based video generation (Standard model with narration + music)
 const DEFAULT_TEMPLATE_PARAMS = {
   style: 'Cinematic' as Infer<typeof styleValidator>,
   voice: {
@@ -50,13 +50,17 @@ const DEFAULT_TEMPLATE_PARAMS = {
     voiceId: 'nPczCjzI2devNBz1zQrb' as const,
     previewUrl: 'https://storage.googleapis.com/eleven-public-prod/premade/voices/nPczCjzI2devNBz1zQrb/2dd3e72c-4fd3-42f1-93ea-abc5d4e5aa1d.mp3' as const,
   } as Infer<typeof voiceValidator>,
+  music: {
+    title: 'Chill' as const,
+    previewUrl: 'https://cdn.pixabay.com/audio/2025/10/23/audio_fc19d0fae0.mp3' as const,
+  } as Infer<typeof musicValidator>,
   aspectRatio: '9:16' as Infer<typeof aspectRatioValidator>,
   durationInSecs: 15,
   resolution: '720p' as Infer<typeof videoResolutionValidator>,
   videoGenerationModel: {
-    model: 'google/veo-3-fast' as const,
-    audio: 'lipsync' as const,
-    category: 'premium' as const,
+    model: 'wan-video/wan-2.2-i2v-fast' as const,
+    audio: 'none' as const,
+    category: 'standard' as const,
   },
 }
 
@@ -127,11 +131,13 @@ export default function TemplateCard({ template, index }: { template: Template; 
       }
 
       // All parameters are pre-defined - user cannot change them
+      // Using standard model with narration + background music
       const videoId = await createVideoBlueprint({
         templateId,
         prompt,
         style: DEFAULT_TEMPLATE_PARAMS.style,
         voice: DEFAULT_TEMPLATE_PARAMS.voice,
+        music: DEFAULT_TEMPLATE_PARAMS.music,
         aspectRatio: DEFAULT_TEMPLATE_PARAMS.aspectRatio,
         durationInSecs: DEFAULT_TEMPLATE_PARAMS.durationInSecs,
         storyTellingStyle: 'default',

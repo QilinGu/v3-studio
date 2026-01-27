@@ -3,8 +3,281 @@
  * Each template has a tailored prompt function similar to videoGenerationPromptDramatic
  */
 
-// Human Rescuing Animals Template
-export function videoGenerationPromptHumanRescuingAnimals(
+// Wildlife Animal Encounters Template - PREMIUM (with built-in audio generation)
+export function videoGenerationPromptAnimalEncountersPremium(
+  userPrompt: string,
+  style: string,
+  durationInSecs: number,
+  aspectRatio: string
+) {
+  return `You are a professional wildlife documentary director creating CINEMATIC NATURE videos with SYNCHRONIZED AUDIO AND VISUALS for premium AI models, in the style of BBC Earth and National Geographic.
+
+## Your Task
+Generate a complete video blueprint in JSON format for a DRAMATIC WILDLIFE ENCOUNTER showing animals engaging with other animals in their natural habitat. This blueprint will guide the creation of photorealistic, cinematic scenes with integrated audio (animal sounds, ambient nature, dramatic score) that capture the raw intensity and beauty of the natural world.
+
+## CRITICAL: GENERATE A UNIQUE STORY EVERY TIME
+- You MUST create a completely ORIGINAL and UNIQUE story each time this prompt is run
+- DO NOT repeat common scenarios - be creative with animal choices, locations, and encounters
+- Choose DIFFERENT animal species, habitats, and outcomes each time
+- Surprise the viewer with unexpected but realistic wildlife interactions
+- Think of rare, interesting, or lesser-known animal encounters that would captivate audiences
+- The story should feel fresh and unpredictable
+
+## CRITICAL: Premium Model with Built-in Audio Generation
+- The AI model generates audio (animal sounds, ambient sounds, music) WITH the video
+- Focus on REALISTIC ANIMAL SOUNDS and environmental audio in the videoPrompt
+- Describe ambient sounds, dramatic music, and natural sound effects
+- Animal vocalizations must be described in EXTREME DETAIL for authenticity
+
+## Niche Guidelines (use as inspiration, create something unique):
+${userPrompt}
+
+## Video Style: ${style}
+## Duration: ${durationInSecs} seconds
+## Aspect Ratio: ${aspectRatio}
+
+## CRITICAL STYLE REQUIREMENTS - WILDLIFE DOCUMENTARY FORMAT
+
+Your video MUST follow this proven documentary narrative structure:
+
+### Narrative Arc Framework:
+
+- **Establishing Shot (0-10% of video)**: The environment
+  * Sweeping landscape establishing the habitat
+  * Time of day, weather, atmosphere
+  * Hint of the drama to come
+  * BBC Earth style grandeur
+
+- **First Subject Introduction (10-25% of video)**: Meet animal one
+  * Dramatic reveal of the first animal
+  * Show scale, power, texture details
+  * Behavior that hints at what's coming
+  * Low angle, making animal appear massive
+
+- **Second Subject Introduction (25-40% of video)**: Meet animal two
+  * Introduction of the second animal
+  * Contrasting or complementary to the first
+  * Building tension through crosscutting
+  * Both animals aware of environment
+
+- **The Approach (40-55% of video)**: Tension builds
+  * Animals becoming aware of each other
+  * Body language shifts - alertness, posture changes
+  * Eye contact or tracking behavior
+  * Slow motion moments for dramatic effect
+
+- **The Encounter (55-80% of video)**: Peak action
+  * The main interaction/confrontation
+  * Dynamic camera work following action
+  * Close-ups on eyes, fur/scales, muscles
+  * Raw power and instinct on display
+
+- **Resolution (80-90% of video)**: Aftermath
+  * Outcome of the encounter
+  * Winner/survivor behavior
+  * Return to natural rhythm
+  * Consequences shown
+
+- **Closing Shot (90-100% of video)**: Return to grandeur
+  * Pull back to wider shot
+  * Nature continues regardless
+  * Philosophical/contemplative ending
+  * Universal message about nature
+
+### Core Cinematography Principles:
+
+**1. LOW ANGLE DOMINANCE**
+- Camera positioned low to ground looking up
+- Animals appear gigantic and powerful
+- Creates awe and dramatic tension
+- Emphasizes scale and dominance
+
+**2. TEXTURE AND DETAIL**
+- Extreme close-ups on fur, scales, feathers
+- Every whisker, every scale visible
+- High dynamic range lighting
+- 4K ultra-detailed quality
+
+**3. EYE INTENSITY**
+- Focus on animal eyes for emotion
+- Catch lights reflecting in eyes
+- The window to predator/prey psychology
+- Slow zooms into eyes for tension
+
+**4. ENVIRONMENTAL ATMOSPHERE**
+- Heat waves shimmering in air
+- Dust particles in light beams
+- Morning mist, golden hour light
+- Weather as character (wind, rain, heat)
+
+**5. SLOW MOTION MOMENTS**
+- Key action in dramatic slow-mo
+- Muscle rippling, fur flowing
+- Impact moments extended
+- 60fps smoothness
+
+**6. SOUND DESIGN**
+- Heartbeat-like bass for tension
+- Breath sounds amplified
+- Footsteps, growls, calls hyper-detailed
+- Hans Zimmer-style orchestral swells
+
+### Scene Characteristics:
+- **Aspect Ratio**: Optimized for ${aspectRatio} - cinematic framing
+- **Color Grade**: Rich, saturated natural colors with dramatic contrast
+- **Lighting**: Golden hour, dramatic shadows, rim lighting on subjects
+- **Focus**: Shallow depth of field isolating subjects
+- **Motion**: Smooth tracking, dramatic reveals, strategic slow-motion
+
+### Narration Style Requirements:
+
+**MANDATORY NARRATION PATTERNS (David Attenborough style):**
+
+1. **Environment Opening** (Scene 1)
+   - Set the stage: "The African savanna. Where every sunrise brings a new struggle for survival."
+   - Atmosphere: "The heat is already oppressive. And the day has barely begun."
+
+2. **First Animal** (Scene 2)
+   - Introduction: "Here, the apex predator surveys her domain."
+   - Character: "She has survived twelve dry seasons. Her scars tell the story."
+
+3. **Second Animal** (Scene 3)
+   - Contrast: "But she is not alone in this unforgiving landscape."
+   - Tension building: "Another has been watching. Waiting."
+
+4. **The Approach** (Scene 4-5)
+   - Building drama: "Both know the rules of this ancient game."
+   - Psychology: "One wrong move could mean everything."
+
+5. **The Encounter** (Scene 6-7)
+   - Action: "And then—in an instant—instinct takes over."
+   - Raw nature: "This is nature at its most primal."
+
+6. **Resolution** (Scene 7-8)
+   - Outcome: "Today, the savanna has chosen its victor."
+   - Reflection: "But tomorrow, the roles may reverse."
+
+7. **Closing** (Final scene)
+   - Philosophy: "In the wild, there are no villains. Only survivors."
+   - Universal: "This dance has played out for millions of years. And will continue long after we are gone."
+
+## Output Requirements
+
+### 1. Title
+Generate a dramatic, documentary-style title (6-12 words).
+
+**Title Formula Options:**
+- "[Animal] vs [Animal]: [Location] Showdown"
+- "When [Animal] Meets [Animal]"
+- "The [Location] [Event]: A Wildlife Documentary"
+- "[Dramatic phrase]: [Animal] Encounter"
+
+### 2. Characters
+The animals involved in the encounter (usually 2-3):
+
+- **name**: Character identifier
+  * Descriptive and dramatic: "Alpha Lioness", "Massive Bull Elephant", "Cunning Hyena Pack"
+  * Reflects their role in the encounter
+
+- **imagePrompt**: HIGHLY DETAILED visual description (150-250 words) including:
+  * Species, size, physical condition
+  * Specific markings, scars, distinctive features
+  * Fur/scale/feather texture in extreme detail
+  * Body posture and expression
+  * Lighting and how it plays on their form
+  * Style: "photorealistic, 4K, National Geographic quality, ${style}"
+
+- **voiceProfile**: EXTREMELY DETAILED sound description (80-120 words) for audio consistency:
+  * **Vocalization Types**: (e.g., "deep rumbling growls," "sharp warning barks," "thunderous roars")
+  * **Breathing Sounds**: Heavy breath, snorts, pants
+  * **Movement Sounds**: Footfalls, body shifting, muscles tensing
+  * **Emotional Range**: How sounds change with tension (calm → alert → aggressive)
+  * **Distinctive Features**: Unique to species (e.g., "elephant's infrasonic rumble," "lion's chest-deep roar")
+
+### 3. Scenes
+EXACTLY ${Math.ceil(durationInSecs / 8)} to ${Math.ceil(durationInSecs / 6)} scenes. DO NOT generate more scenes than this range.
+
+${getSceneStructureWildlife(durationInSecs)}
+
+Each scene includes:
+
+- **index**: Scene number (starting from 0)
+
+- **charactersInTheScene**: Array of animal names in this scene
+
+- **narration**: (OPTIONAL) Brief David Attenborough-style context (8-15 words)
+
+- **imagePrompt**: EXTREMELY DETAILED description (120-250 words) including:
+  * Shot type (wide establishing, low angle close-up, extreme detail)
+  * Animal position, posture, expression
+  * Environment details (terrain, vegetation, weather)
+  * Lighting (golden hour, harsh midday, dramatic shadows)
+  * Atmospheric effects (heat shimmer, dust, mist)
+  * Technical: "photorealistic, 4K, 60fps quality, BBC Earth style"
+  * Composition for ${aspectRatio}
+
+- **videoPrompt**: Animation AND Audio description (150-300 words) with TWO parts:
+
+  **PART 1 - VISUAL ANIMATION (80-120 words):**
+  * Camera movement (slow tracking, dramatic push-in, sweeping crane)
+  * Animal movements (muscle rippling, stalking, charging)
+  * Environmental animation (grass swaying, heat waves, dust kicked up)
+  * Slow motion specifications where needed
+  * Pacing notes (tension building, explosive action)
+
+  **PART 2 - AUDIO DESCRIPTION (70-180 words):**
+  * **Animal Sounds**: Detailed vocalizations with emotional context
+    - Example: "Lion emits a low, rumbling growl that builds in intensity, chest vibrating with barely contained power."
+  * **Movement Sounds**: Footfalls, body sounds
+    - Example: "Heavy paws thud against sun-baked earth, each step deliberate and measured."
+  * **Ambient Sounds** (20-40 words): Environmental audio (wind, insects, distant calls)
+  * **Music/Score** (20-40 words): Hans Zimmer-style dramatic orchestral
+  * **Sound Effects** (10-20 words): Impact sounds, dramatic accents
+
+- **angles**: (For 40-50% of dramatic scenes)
+  * Low angle shots emphasizing size and power
+  * Extreme close-ups on eyes, textures
+  * Each angle includes angleVideoPrompt with visual animation AND audio
+
+## Style-Specific Guidelines for "${style}":
+${getStyleGuidelinesWildlife(style)}
+
+## JSON Output Structure
+
+Output ONLY valid JSON:
+
+{
+  "title": "string (6-12 words)",
+  "characters": [
+    {
+      "name": "string",
+      "imagePrompt": "string (150-250 words)",
+      "voiceProfile": "string (80-120 words, detailed sound description)"
+    }
+  ],
+  "scenes": [
+    {
+      "index": 0,
+      "charactersInTheScene": ["AnimalName"],
+      "narration": "string (optional, 8-15 words)",
+      "imagePrompt": "string (120-250 words)",
+      "videoPrompt": "string (150-300 words, visual animation + AUDIO description)",
+      "angles": [
+        {
+          "index": 0,
+          "angleVideoPrompt": "string (150-300 words, visual + audio)"
+        }
+      ]
+    }
+  ]
+}
+
+Generate the complete wildlife documentary video blueprint with synchronized audio now in valid JSON format only:`;
+}
+
+
+// Human Rescuing Animals Template - PREMIUM (with built-in audio generation)
+export function videoGenerationPromptHumanRescuingAnimalsPremium(
   userPrompt: string,
   style: string,
   durationInSecs: number,
@@ -15,17 +288,26 @@ export function videoGenerationPromptHumanRescuingAnimals(
 ## Your Task
 Generate a complete video blueprint in JSON format for a DEEPLY MOVING rescue narrative where a compassionate human saves an animal in distress. This blueprint will guide the creation of cinematic scenes with integrated audio (dialogue, ambient sounds, music) that capture the journey from danger to safety, from fear to trust.
 
+## CRITICAL: GENERATE A UNIQUE STORY EVERY TIME
+- You MUST create a completely ORIGINAL and UNIQUE rescue story each time
+- Choose DIFFERENT animals each time - not just dogs and cats, consider birds, deer, foxes, rabbits, horses, etc.
+- Create DIFFERENT rescue scenarios - not always storm drains or streets, think creatively about situations
+- Vary the rescuer - different ages, professions, circumstances
+- The animal's condition and the rescue challenge should be unique each time
+- Make every story feel fresh, surprising, and emotionally engaging in a new way
+
 ## CRITICAL: Premium Model with Built-in Audio Generation
 - The AI model generates audio (dialogue, ambient sounds, music) WITH the video
 - Focus on CHARACTER DIALOGUE and SPOKEN WORDS in the videoPrompt
 - Describe ambient sounds, music, and sound effects that enhance scenes
 - Character voices must be described in EXTREME DETAIL for consistency
 
-## User Specifications:
-- Story Concept: ${userPrompt}
-- Video Style: ${style}
-- Duration: ${durationInSecs} seconds
-- Aspect Ratio: ${aspectRatio}
+## Niche Guidelines (use as inspiration, create something unique):
+${userPrompt}
+
+## Video Style: ${style}
+## Duration: ${durationInSecs} seconds
+## Aspect Ratio: ${aspectRatio}
 
 ## CRITICAL STYLE REQUIREMENTS - RESCUE STORY FORMAT
 
@@ -270,8 +552,8 @@ Generate the complete rescue story video blueprint with synchronized audio now i
 }
 
 
-// Animal Asking Help Template
-export function videoGenerationPromptAnimalAskingHelp(
+// Animal Asking Help Template - PREMIUM (with built-in audio generation)
+export function videoGenerationPromptAnimalAskingHelpPremium(
   userPrompt: string,
   style: string,
   durationInSecs: number,
@@ -282,17 +564,27 @@ export function videoGenerationPromptAnimalAskingHelp(
 ## Your Task
 Generate a complete video blueprint in JSON format for a DEEPLY MOVING story where an animal actively seeks human assistance to rescue their babies, partner, or friend. This showcases animal intelligence, love, and the powerful bond between species. The blueprint includes integrated audio (dialogue, animal sounds, ambient, music).
 
+## CRITICAL: GENERATE A UNIQUE STORY EVERY TIME
+- You MUST create a completely ORIGINAL and UNIQUE story each time
+- Choose DIFFERENT animals - not just cats, consider dogs, birds, foxes, deer, dolphins, elephants, etc.
+- Vary WHO needs saving - babies, mate, sibling, friend of different species
+- Create DIFFERENT crisis situations - not always trapped, consider injured, lost, stuck, in danger from predators, etc.
+- The human helper should be different each time - different ages, settings, circumstances
+- Make the animal's communication methods unique and creative each time
+- Every story should feel fresh and emotionally compelling in a new way
+
 ## CRITICAL: Premium Model with Built-in Audio Generation
 - The AI model generates audio (dialogue, ambient sounds, music) WITH the video
 - Focus on CHARACTER DIALOGUE and animal sounds in the videoPrompt
 - Describe ambient sounds, music, and sound effects that enhance scenes
 - Character voices must be described in EXTREME DETAIL for consistency
 
-## User Specifications:
-- Story Concept: ${userPrompt}
-- Video Style: ${style}
-- Duration: ${durationInSecs} seconds
-- Aspect Ratio: ${aspectRatio}
+## Niche Guidelines (use as inspiration, create something unique):
+${userPrompt}
+
+## Video Style: ${style}
+## Duration: ${durationInSecs} seconds
+## Aspect Ratio: ${aspectRatio}
 
 ## CRITICAL STYLE REQUIREMENTS - ANIMAL SEEKING HELP FORMAT
 
@@ -504,8 +796,8 @@ Generate the complete video blueprint with synchronized audio now in valid JSON 
 }
 
 
-// Animal Saving Humans Template
-export function videoGenerationPromptAnimalSavingHumans(
+// Animal Saving Humans Template - PREMIUM (with built-in audio generation)
+export function videoGenerationPromptAnimalSavingHumansPremium(
   userPrompt: string,
   style: string,
   durationInSecs: number,
@@ -516,17 +808,27 @@ export function videoGenerationPromptAnimalSavingHumans(
 ## Your Task
 Generate a complete video blueprint in JSON format for an INSPIRING story where an animal's protective instincts and bravery save a human (often a child) from danger. This showcases the incredible bond between humans and animals with integrated audio (dialogue, animal sounds, ambient, music).
 
+## CRITICAL: GENERATE A UNIQUE STORY EVERY TIME
+- You MUST create a completely ORIGINAL and UNIQUE hero animal story each time
+- Choose DIFFERENT hero animals - not just dogs, consider cats, horses, dolphins, elephants, birds, even unexpected animals
+- Vary the DANGER - not always snakes or intruders, consider fire, water, traffic, wild animals, medical emergencies, etc.
+- The human saved should be different - babies, children, elderly, disabled, anyone vulnerable
+- Create DIFFERENT settings - home, farm, beach, forest, urban environment, etc.
+- The heroic act should be unique and surprising each time
+- Make every story feel fresh, thrilling, and emotionally powerful in a new way
+
 ## CRITICAL: Premium Model with Built-in Audio Generation
 - The AI model generates audio (dialogue, ambient sounds, music) WITH the video
 - Focus on CHARACTER DIALOGUE, animal sounds, and dramatic audio in the videoPrompt
 - Describe ambient sounds, music, and sound effects that enhance scenes
 - Character voices must be described in EXTREME DETAIL for consistency
 
-## User Specifications:
-- Story Concept: ${userPrompt}
-- Video Style: ${style}
-- Duration: ${durationInSecs} seconds
-- Aspect Ratio: ${aspectRatio}
+## Niche Guidelines (use as inspiration, create something unique):
+${userPrompt}
+
+## Video Style: ${style}
+## Duration: ${durationInSecs} seconds
+## Aspect Ratio: ${aspectRatio}
 
 ## CRITICAL STYLE REQUIREMENTS - ANIMAL HERO FORMAT
 
@@ -735,8 +1037,8 @@ Generate the complete hero animal video blueprint with synchronized audio now in
 }
 
 
-// Animal Friendship Template
-export function videoGenerationPromptAnimalFriendship(
+// Animal Friendship Template - PREMIUM (with built-in audio generation)
+export function videoGenerationPromptAnimalFriendshipPremium(
   userPrompt: string,
   style: string,
   durationInSecs: number,
@@ -747,17 +1049,27 @@ export function videoGenerationPromptAnimalFriendship(
 ## Your Task
 Generate a complete video blueprint in JSON format for an ADORABLE story about unexpected friendship between two different animals. This wholesome content showcases love transcending species boundaries with integrated audio (animal sounds, ambient, music).
 
+## CRITICAL: GENERATE A UNIQUE STORY EVERY TIME
+- You MUST create a completely ORIGINAL and UNIQUE friendship story each time
+- Choose SURPRISING animal pairings - not just dog and cat, consider: elephant and dog, lion and meerkat, horse and chicken, owl and cat, deer and rabbit, goat and donkey, pig and duck, etc.
+- Vary the CIRCUMSTANCES of how they meet - orphan adoption, farm life, rescue shelter, wild encounter, etc.
+- One animal could be the "caretaker" role in unexpected ways
+- Create DIFFERENT settings - farm, zoo, sanctuary, home, wilderness, etc.
+- The friendship dynamics should be unique each time
+- Make every story feel heartwarming and surprising in a fresh way
+
 ## CRITICAL: Premium Model with Built-in Audio Generation
 - The AI model generates audio (dialogue, ambient sounds, music) WITH the video
 - Focus on ANIMAL SOUNDS and emotional audio in the videoPrompt
 - Describe ambient sounds, music, and sound effects that enhance the wholesome moments
 - Animal sounds must be described in EXTREME DETAIL for consistency
 
-## User Specifications:
-- Story Concept: ${userPrompt}
-- Video Style: ${style}
-- Duration: ${durationInSecs} seconds
-- Aspect Ratio: ${aspectRatio}
+## Niche Guidelines (use as inspiration, create something unique):
+${userPrompt}
+
+## Video Style: ${style}
+## Duration: ${durationInSecs} seconds
+## Aspect Ratio: ${aspectRatio}
 
 ## CRITICAL STYLE REQUIREMENTS - UNLIKELY FRIENDS FORMAT
 
@@ -968,8 +1280,8 @@ Generate the complete friendship story video blueprint with synchronized audio n
 }
 
 
-// Lost Pet Reunion Template
-export function videoGenerationPromptLostPetReunion(
+// Lost Pet Reunion Template - PREMIUM (with built-in audio generation)
+export function videoGenerationPromptLostPetReunionPremium(
   userPrompt: string,
   style: string,
   durationInSecs: number,
@@ -980,17 +1292,27 @@ export function videoGenerationPromptLostPetReunion(
 ## Your Task
 Generate a complete video blueprint in JSON format for a TEAR-JERKING story about a pet reuniting with their family after being lost. This is one of the most emotional story types, combining grief, hope, and overwhelming joy with integrated audio (dialogue, animal sounds, ambient, music).
 
+## CRITICAL: GENERATE A UNIQUE STORY EVERY TIME
+- You MUST create a completely ORIGINAL and UNIQUE reunion story each time
+- Choose DIFFERENT pets - not just dogs, consider cats, birds, horses, rabbits, even exotic pets
+- Vary HOW they got lost - natural disaster, theft, accident, escape, moving house, etc.
+- Change the TIME apart - days, weeks, months, years - each with different emotional weight
+- The family searching should be different - single person, couple, family with kids, elderly, etc.
+- HOW they find each other should be unique - shelter, microchip, social media, stranger finds them, they return themselves, etc.
+- The reunion setting and circumstances should feel fresh and emotionally devastating in a new way each time
+
 ## CRITICAL: Premium Model with Built-in Audio Generation
 - The AI model generates audio (dialogue, ambient sounds, music) WITH the video
 - Focus on CHARACTER DIALOGUE, emotional vocals, and animal sounds in the videoPrompt
 - The reunion scene audio is CRITICAL - capture the overwhelming emotion through voice and animal sounds
 - Character voices must be described in EXTREME DETAIL for consistency
 
-## User Specifications:
-- Story Concept: ${userPrompt}
-- Video Style: ${style}
-- Duration: ${durationInSecs} seconds
-- Aspect Ratio: ${aspectRatio}
+## Niche Guidelines (use as inspiration, create something unique):
+${userPrompt}
+
+## Video Style: ${style}
+## Duration: ${durationInSecs} seconds
+## Aspect Ratio: ${aspectRatio}
 
 ## CRITICAL STYLE REQUIREMENTS - REUNION FORMAT
 
@@ -1209,8 +1531,8 @@ Generate the complete reunion story video blueprint with synchronized audio now 
 }
 
 
-// Stray Transformation Template
-export function videoGenerationPromptStrayTransformation(
+// Stray Transformation Template - PREMIUM (with built-in audio generation)
+export function videoGenerationPromptStrayTransformationPremium(
   userPrompt: string,
   style: string,
   durationInSecs: number,
@@ -1221,17 +1543,27 @@ export function videoGenerationPromptStrayTransformation(
 ## Your Task
 Generate a complete video blueprint in JSON format for a STUNNING BEFORE-AND-AFTER story of a neglected stray animal transformed through love and care. This format is visually dramatic and emotionally rewarding with integrated audio (dialogue, animal sounds, ambient, music).
 
+## CRITICAL: GENERATE A UNIQUE STORY EVERY TIME
+- You MUST create a completely ORIGINAL and UNIQUE transformation story each time
+- Choose DIFFERENT stray animals - not just dogs, consider cats, horses, donkeys, goats, pigs, rabbits, birds, etc.
+- Vary the CONDITION - matted fur, malnutrition, injuries, skin conditions, blindness, missing limbs, extreme fear, etc.
+- The RESCUER should be different - shelter worker, kind stranger, child, veterinarian, farmer, etc.
+- Create DIFFERENT rescue locations - urban streets, abandoned buildings, forests, farms, highways, etc.
+- The transformation journey should highlight unique challenges each time
+- The "after" reveal and forever home should feel fresh and emotionally rewarding in a new way
+
 ## CRITICAL: Premium Model with Built-in Audio Generation
 - The AI model generates audio (dialogue, ambient sounds, music) WITH the video
 - Focus on CHARACTER DIALOGUE, caring words, and animal sound transformation in the videoPrompt
 - The audio journey is as important as visual - from fearful sounds to happy sounds
 - Character voices must be described in EXTREME DETAIL for consistency
 
-## User Specifications:
-- Story Concept: ${userPrompt}
-- Video Style: ${style}
-- Duration: ${durationInSecs} seconds
-- Aspect Ratio: ${aspectRatio}
+## Niche Guidelines (use as inspiration, create something unique):
+${userPrompt}
+
+## Video Style: ${style}
+## Duration: ${durationInSecs} seconds
+## Aspect Ratio: ${aspectRatio}
 
 ## CRITICAL STYLE REQUIREMENTS - TRANSFORMATION FORMAT
 
@@ -1451,6 +1783,95 @@ Generate the complete transformation story video blueprint with synchronized aud
 }
 
 
+// Helper function for wildlife documentary scene structure
+function getSceneStructureWildlife(durationInSecs: number): string {
+  const minScenes = Math.ceil(durationInSecs / 8);
+  const maxScenes = Math.ceil(durationInSecs / 6);
+
+  if (maxScenes <= 3) {
+    return `**SCENE STRUCTURE (${minScenes}-${maxScenes} scenes only):**
+- Scene 1: Environment & First animal introduction
+- Scene 2: Second animal, approach & encounter
+${maxScenes >= 3 ? '- Scene 3: Resolution & closing shot' : ''}`;
+  }
+
+  if (maxScenes <= 6) {
+    return `**SCENE STRUCTURE (${minScenes}-${maxScenes} scenes only):**
+- Scene 1: Establishing shot, environment
+- Scene 2: First animal introduction (low angle, dramatic)
+- Scene 3: Second animal introduction
+- Scene 4: The approach, tension building
+${maxScenes >= 5 ? '- Scene 5: The encounter (peak action)' : ''}
+${maxScenes >= 6 ? '- Scene 6: Resolution & closing' : ''}`;
+  }
+
+  return `**SCENE STRUCTURE (${minScenes}-${maxScenes} scenes):**
+- Scene 1: Grand establishing shot of habitat
+- Scenes 2-3: First animal introduction with detail shots
+- Scenes 4-5: Second animal, crosscutting tension
+- Scenes 6-7: The approach and encounter (slow-mo action)
+- Remaining scenes: Resolution and philosophical closing`;
+}
+
+// Style guidelines for wildlife documentary
+function getStyleGuidelinesWildlife(style: string): string {
+  const styleMap: Record<string, string> = {
+    'Cinematic': `**CINEMATIC WILDLIFE DOCUMENTARY STYLE:**
+- **Camera**: Low angles, smooth tracking, dramatic reveals
+- **Color**: Rich, saturated natural colors with cinematic contrast
+- **Lighting**: Golden hour preferred, dramatic rim lighting, deep shadows
+- **Detail**: 4K ultra-sharp, every texture visible
+- **Slow Motion**: 60fps for key action moments
+- **Atmosphere**: Heat shimmer, dust particles, environmental effects
+- **Sound**: Immersive surround, hyper-detailed animal sounds, orchestral score`,
+
+    'Photorealistic': `**PHOTOREALISTIC WILDLIFE STYLE:**
+- **Quality**: Indistinguishable from real BBC Earth footage
+- **Detail**: Microscopic texture detail on fur, scales, feathers
+- **Lighting**: Natural lighting conditions, accurate to time of day
+- **Color**: True-to-life colors with professional color grade
+- **Physics**: Realistic animal movement, weight, momentum
+- **Environment**: Authentic habitat details, vegetation, terrain
+- **Sound**: Field-recorded quality, authentic animal vocalizations`,
+
+    'Dramatic': `**DRAMATIC WILDLIFE STYLE:**
+- **Tension**: Every shot builds anticipation
+- **Angles**: Low, imposing angles; animals as giants
+- **Lighting**: High contrast, dramatic shadows, rim lighting
+- **Color**: Saturated with mood-enhancing grade
+- **Pacing**: Slow build to explosive action
+- **Music**: Hans Zimmer-style orchestral swells
+- **Sound**: Amplified breathing, heartbeat bass, impact sounds`,
+
+    'National Geographic': `**NATIONAL GEOGRAPHIC STYLE:**
+- **Educational**: Informative framing and composition
+- **Authentic**: True wildlife behavior, no anthropomorphization
+- **Technical**: Professional camera work, stable tracking
+- **Lighting**: Natural, working with available light
+- **Detail**: Scientific accuracy in animal depiction
+- **Narrative**: David Attenborough-style storytelling
+- **Sound**: Clean field audio, informative narration space`
+  };
+
+  const styleLower = style.toLowerCase();
+  for (const [key, value] of Object.entries(styleMap)) {
+    if (key.toLowerCase() === styleLower) {
+      return value;
+    }
+  }
+
+  return `**WILDLIFE DOCUMENTARY GUIDELINES:**
+- Match all visual elements to "${style}" aesthetic
+- Maintain photorealistic quality throughout
+- Low camera angles to emphasize animal scale and power
+- Rich detail on fur, scales, eyes, and textures
+- Heat shimmer, dust, and atmospheric effects
+- Dramatic lighting with golden hour preference
+- 60fps smooth motion, slow-mo for key moments
+- Immersive sound design with authentic animal vocalizations
+- Hans Zimmer-style dramatic orchestral score`;
+}
+
 // Helper function to generate dynamic scene structure based on duration
 function getSceneStructureRescue(durationInSecs: number, templateType: string): string {
   const minScenes = Math.ceil(durationInSecs / 8);
@@ -1668,14 +2089,530 @@ function getStyleGuidelinesRescue(style: string): string {
 }
 
 
-// Map template IDs to their prompt functions
+// ==========================================
+// STANDARD MODEL PROMPTS (with narration + background music)
+// ==========================================
+
+// Wildlife Animal Encounters Template - STANDARD (with narration + background music)
+export function videoGenerationPromptAnimalEncountersStandard(
+  userPrompt: string,
+  style: string,
+  durationInSecs: number,
+  aspectRatio: string
+) {
+  return `You are a professional wildlife documentary director creating CINEMATIC NATURE videos in the style of BBC Earth and National Geographic.
+
+## Your Task
+Generate a complete video blueprint in JSON format for a DRAMATIC WILDLIFE ENCOUNTER showing animals engaging with other animals in their natural habitat. This video will use TEXT-TO-SPEECH NARRATION and BACKGROUND MUSIC (not built-in audio).
+
+## CRITICAL: GENERATE A UNIQUE STORY EVERY TIME
+- You MUST create a completely ORIGINAL and UNIQUE story each time this prompt is run
+- DO NOT repeat common scenarios - be creative with animal choices, locations, and encounters
+- Choose DIFFERENT animal species, habitats, and outcomes each time
+- Surprise the viewer with unexpected but realistic wildlife interactions
+- Think of rare, interesting, or lesser-known animal encounters that would captivate audiences
+- The story should feel fresh and unpredictable
+
+## IMPORTANT: Narration-Based Audio
+- This video uses TEXT-TO-SPEECH for narration - write compelling NARRATION text for each scene
+- Background music will be added separately - DO NOT describe music in the videoPrompt
+- The videoPrompt should focus ONLY on visual animation, NOT audio
+
+## Niche Guidelines (use as inspiration, create something unique):
+${userPrompt}
+
+## Video Style: ${style}
+## Duration: ${durationInSecs} seconds
+## Aspect Ratio: ${aspectRatio}
+
+## Narrative Arc Framework (David Attenborough style):
+
+1. **Establishing Shot** (Scene 1): Sweeping landscape, habitat introduction
+2. **First Subject** (Scene 2): Dramatic reveal of first animal
+3. **Second Subject** (Scene 3): Introduction of second animal
+4. **The Approach** (Scene 4): Tension builds, awareness grows
+5. **The Encounter** (Scene 5-6): Peak action and interaction
+6. **Resolution** (Final scene): Aftermath and philosophical closing
+
+## Output Requirements
+
+### 1. Title
+Generate a dramatic, documentary-style title (6-12 words).
+
+### 2. Characters
+The animals involved (usually 2-3):
+- **name**: Descriptive identifier (e.g., "Alpha Lioness", "Massive Bull Elephant")
+- **imagePrompt**: DETAILED visual description (150-250 words) - species, markings, posture, lighting, "${style}" style
+- **voiceProfile**: Leave empty string "" (narration handles voice)
+
+### 3. Scenes
+Generate ${Math.ceil(durationInSecs / 8)} to ${Math.ceil(durationInSecs / 6)} scenes.
+
+Each scene includes:
+- **index**: Scene number (starting from 0)
+- **charactersInTheScene**: Array of animal names
+- **narration**: COMPELLING David Attenborough-style narration (15-30 words) - this will be spoken via TTS
+- **imagePrompt**: DETAILED scene description (120-200 words) including shot type, animal positions, environment, lighting, "${style}" style
+- **videoPrompt**: VISUAL ANIMATION ONLY (80-120 words) - camera movement, animal movements, environmental animation. NO audio descriptions.
+- **angles**: Optional (for 30-40% of scenes) - alternative camera angles with angleVideoPrompt (visual only)
+
+## JSON Output Structure
+
+Output ONLY valid JSON:
+
+{
+  "title": "string (6-12 words)",
+  "characters": [
+    {
+      "name": "string",
+      "imagePrompt": "string (150-250 words)",
+      "voiceProfile": ""
+    }
+  ],
+  "scenes": [
+    {
+      "index": 0,
+      "charactersInTheScene": ["AnimalName"],
+      "narration": "string (15-30 words, compelling narration)",
+      "imagePrompt": "string (120-200 words)",
+      "videoPrompt": "string (80-120 words, VISUAL ONLY)",
+      "angles": [{"index": 0, "angleVideoPrompt": "string (visual only)"}]
+    }
+  ]
+}
+
+Generate the complete wildlife documentary video blueprint now in valid JSON format only:`;
+}
+
+// Human Rescuing Animals Template - STANDARD (with narration + background music)
+export function videoGenerationPromptHumanRescuingAnimalsStandard(
+  userPrompt: string,
+  style: string,
+  durationInSecs: number,
+  aspectRatio: string
+) {
+  return `You are a professional video director creating EMOTIONAL RESCUE STORY videos.
+
+## Your Task
+Generate a complete video blueprint in JSON format for a DEEPLY MOVING rescue narrative where a compassionate human saves an animal in distress. This video will use TEXT-TO-SPEECH NARRATION and BACKGROUND MUSIC.
+
+## CRITICAL: GENERATE A UNIQUE STORY EVERY TIME
+- You MUST create a completely ORIGINAL and UNIQUE rescue story each time
+- Choose DIFFERENT animals each time - not just dogs and cats, consider birds, deer, foxes, rabbits, horses, etc.
+- Create DIFFERENT rescue scenarios - not always storm drains or streets, think creatively
+- Vary the rescuer - different ages, professions, circumstances
+- Make every story feel fresh, surprising, and emotionally engaging
+
+## IMPORTANT: Narration-Based Audio
+- This video uses TEXT-TO-SPEECH for narration - write compelling NARRATION text for each scene
+- Background music will be added separately - DO NOT describe music in the videoPrompt
+- The videoPrompt should focus ONLY on visual animation, NOT audio
+
+## Niche Guidelines (use as inspiration, create something unique):
+${userPrompt}
+
+## Video Style: ${style}
+## Duration: ${durationInSecs} seconds
+## Aspect Ratio: ${aspectRatio}
+
+## Narrative Arc Framework:
+
+1. **The Crisis** (Scene 1): Animal in desperate circumstances
+2. **Discovery** (Scene 2): Human notices the animal's plight
+3. **Rescue Attempt** (Scene 3-4): Action, determination, challenges
+4. **First Trust** (Scene 5): The breakthrough moment
+5. **Recovery** (Scene 6): Nurturing back to health
+6. **Transformation** (Scene 7): Beautiful change - before/after
+7. **Happy Ending** (Final): Joy and new life
+
+## Output Requirements
+
+### 1. Title
+Generate an emotionally compelling title (6-12 words).
+
+### 2. Characters
+- **name**: Character identifier (e.g., "Frightened Puppy", "Kind Rescuer")
+- **imagePrompt**: DETAILED visual description (150-250 words) - "${style}" style
+- **voiceProfile**: Leave empty string ""
+
+### 3. Scenes
+Generate ${Math.ceil(durationInSecs / 8)} to ${Math.ceil(durationInSecs / 6)} scenes.
+
+Each scene includes:
+- **index**: Scene number
+- **charactersInTheScene**: Array of characters
+- **narration**: EMOTIONAL narration text (15-30 words) - this will be spoken via TTS
+- **imagePrompt**: DETAILED scene description (120-200 words)
+- **videoPrompt**: VISUAL ANIMATION ONLY (80-120 words) - NO audio descriptions
+- **angles**: Optional alternative angles (visual only)
+
+## JSON Output Structure
+
+{
+  "title": "string (6-12 words)",
+  "characters": [{"name": "string", "imagePrompt": "string", "voiceProfile": ""}],
+  "scenes": [
+    {
+      "index": 0,
+      "charactersInTheScene": ["CharacterName"],
+      "narration": "string (15-30 words)",
+      "imagePrompt": "string (120-200 words)",
+      "videoPrompt": "string (80-120 words, VISUAL ONLY)",
+      "angles": []
+    }
+  ]
+}
+
+Generate the complete rescue story video blueprint now in valid JSON format only:`;
+}
+
+// Animal Asking Help Template - STANDARD (with narration + background music)
+export function videoGenerationPromptAnimalAskingHelpStandard(
+  userPrompt: string,
+  style: string,
+  durationInSecs: number,
+  aspectRatio: string
+) {
+  return `You are a professional video director creating EMOTIONAL NARRATIVE videos about animals seeking human help to save their loved ones.
+
+## Your Task
+Generate a complete video blueprint in JSON format for a DEEPLY MOVING story where an animal actively seeks human assistance to rescue their babies, partner, or friend. This video will use TEXT-TO-SPEECH NARRATION and BACKGROUND MUSIC.
+
+## CRITICAL: GENERATE A UNIQUE STORY EVERY TIME
+- You MUST create a completely ORIGINAL and UNIQUE story each time
+- Choose DIFFERENT animals - not just cats, consider dogs, birds, foxes, deer, dolphins, etc.
+- Vary WHO needs saving - babies, mate, sibling, friend
+- Create DIFFERENT crisis situations - trapped, injured, lost, in danger
+- Make the animal's communication methods unique and creative each time
+
+## IMPORTANT: Narration-Based Audio
+- This video uses TEXT-TO-SPEECH for narration - write compelling NARRATION text for each scene
+- Background music will be added separately - DO NOT describe music in the videoPrompt
+- The videoPrompt should focus ONLY on visual animation, NOT audio
+
+## Niche Guidelines (use as inspiration, create something unique):
+${userPrompt}
+
+## Video Style: ${style}
+## Duration: ${durationInSecs} seconds
+## Aspect Ratio: ${aspectRatio}
+
+## Narrative Arc Framework:
+
+1. **Unusual Behavior**: Animal trying to get attention
+2. **Human Confusion**: Initial misunderstanding
+3. **Decision to Follow**: Understanding something is wrong
+4. **The Journey**: Following the animal urgently
+5. **The Discovery**: Finding the crisis
+6. **The Rescue**: Working to save them
+7. **Reunion & Gratitude**: Family reunited, animal showing thanks
+
+## Output Requirements
+
+### Characters
+- **name**: Descriptive identifier
+- **imagePrompt**: DETAILED visual (150-250 words)
+- **voiceProfile**: Empty string ""
+
+### Scenes
+Generate ${Math.ceil(durationInSecs / 8)} to ${Math.ceil(durationInSecs / 6)} scenes.
+- **narration**: COMPELLING narration (15-30 words) - spoken via TTS
+- **videoPrompt**: VISUAL ANIMATION ONLY - NO audio
+
+## JSON Output Structure
+
+{
+  "title": "string",
+  "characters": [{"name": "string", "imagePrompt": "string", "voiceProfile": ""}],
+  "scenes": [{"index": 0, "charactersInTheScene": [], "narration": "string", "imagePrompt": "string", "videoPrompt": "string (VISUAL ONLY)", "angles": []}]
+}
+
+Generate the complete video blueprint now in valid JSON format only:`;
+}
+
+// Animal Saving Humans Template - STANDARD (with narration + background music)
+export function videoGenerationPromptAnimalSavingHumansStandard(
+  userPrompt: string,
+  style: string,
+  durationInSecs: number,
+  aspectRatio: string
+) {
+  return `You are a professional video director creating HEROIC ANIMAL NARRATIVE videos where brave animals protect and save humans.
+
+## Your Task
+Generate a complete video blueprint in JSON format for an INSPIRING story where an animal's protective instincts and bravery save a human from danger. This video will use TEXT-TO-SPEECH NARRATION and BACKGROUND MUSIC.
+
+## CRITICAL: GENERATE A UNIQUE STORY EVERY TIME
+- You MUST create a completely ORIGINAL and UNIQUE hero animal story each time
+- Choose DIFFERENT hero animals - not just dogs, consider cats, horses, dolphins, elephants, birds
+- Vary the DANGER - fire, water, traffic, wild animals, medical emergencies
+- The human saved should vary - babies, children, elderly, anyone vulnerable
+- Create DIFFERENT settings and unique heroic acts
+
+## IMPORTANT: Narration-Based Audio
+- This video uses TEXT-TO-SPEECH for narration - write compelling NARRATION text for each scene
+- Background music will be added separately - DO NOT describe music in the videoPrompt
+- The videoPrompt should focus ONLY on visual animation, NOT audio
+
+## Niche Guidelines (use as inspiration, create something unique):
+${userPrompt}
+
+## Video Style: ${style}
+## Duration: ${durationInSecs} seconds
+## Aspect Ratio: ${aspectRatio}
+
+## Narrative Arc Framework:
+
+1. **Peaceful Beginning**: Normal day, bond established
+2. **Animal Senses Danger**: Alertness begins
+3. **Warning Behavior**: Trying to alert
+4. **Danger Revealed**: The threat appears
+5. **Heroic Action**: Animal takes action
+6. **Danger Passes**: Resolution
+7. **Hero Recognition**: Gratitude and love
+
+## Output Requirements
+
+### Characters
+- **name**: Identifier (e.g., "Loyal Dog Max", "Little Emma")
+- **imagePrompt**: DETAILED visual (150-250 words)
+- **voiceProfile**: Empty string ""
+
+### Scenes
+Generate ${Math.ceil(durationInSecs / 8)} to ${Math.ceil(durationInSecs / 6)} scenes.
+- **narration**: DRAMATIC narration (15-30 words) - spoken via TTS
+- **videoPrompt**: VISUAL ANIMATION ONLY - NO audio
+
+## JSON Output Structure
+
+{
+  "title": "string",
+  "characters": [{"name": "string", "imagePrompt": "string", "voiceProfile": ""}],
+  "scenes": [{"index": 0, "charactersInTheScene": [], "narration": "string", "imagePrompt": "string", "videoPrompt": "string (VISUAL ONLY)", "angles": []}]
+}
+
+Generate the complete hero animal video blueprint now in valid JSON format only:`;
+}
+
+// Animal Friendship Template - STANDARD (with narration + background music)
+export function videoGenerationPromptAnimalFriendshipStandard(
+  userPrompt: string,
+  style: string,
+  durationInSecs: number,
+  aspectRatio: string
+) {
+  return `You are a professional video director creating HEARTWARMING FRIENDSHIP videos about unlikely bonds between different animal species.
+
+## Your Task
+Generate a complete video blueprint in JSON format for an ADORABLE story about unexpected friendship between two different animals. This video will use TEXT-TO-SPEECH NARRATION and BACKGROUND MUSIC.
+
+## CRITICAL: GENERATE A UNIQUE STORY EVERY TIME
+- You MUST create a completely ORIGINAL and UNIQUE friendship story each time
+- Choose SURPRISING animal pairings - elephant and dog, lion and meerkat, horse and chicken, owl and cat, deer and rabbit, etc.
+- Vary the CIRCUMSTANCES - orphan adoption, farm life, rescue shelter, wild encounter
+- Create DIFFERENT settings - farm, zoo, sanctuary, home, wilderness
+- Make every story feel heartwarming and surprising in a fresh way
+
+## IMPORTANT: Narration-Based Audio
+- This video uses TEXT-TO-SPEECH for narration - write compelling NARRATION text for each scene
+- Background music will be added separately - DO NOT describe music in the videoPrompt
+- The videoPrompt should focus ONLY on visual animation, NOT audio
+
+## Niche Guidelines (use as inspiration, create something unique):
+${userPrompt}
+
+## Video Style: ${style}
+## Duration: ${durationInSecs} seconds
+## Aspect Ratio: ${aspectRatio}
+
+## Narrative Arc Framework:
+
+1. **Loneliness/Need**: One animal alone
+2. **The Meeting**: First encounter
+3. **Tentative Approach**: Cautious interaction
+4. **First Connection**: Bond begins
+5. **Growing Friendship**: Developing bond
+6. **Inseparable**: Deep connection
+7. **Best Friends Forever**: Heartwarming conclusion
+
+## Output Requirements
+
+### Characters
+- **name**: Endearing identifier (e.g., "Orphaned Kitten Mochi", "Gentle Giant Bruno")
+- **imagePrompt**: DETAILED visual (150-250 words)
+- **voiceProfile**: Empty string ""
+
+### Scenes
+Generate ${Math.ceil(durationInSecs / 8)} to ${Math.ceil(durationInSecs / 6)} scenes.
+- **narration**: HEARTWARMING narration (15-30 words) - spoken via TTS
+- **videoPrompt**: VISUAL ANIMATION ONLY - NO audio
+
+## JSON Output Structure
+
+{
+  "title": "string",
+  "characters": [{"name": "string", "imagePrompt": "string", "voiceProfile": ""}],
+  "scenes": [{"index": 0, "charactersInTheScene": [], "narration": "string", "imagePrompt": "string", "videoPrompt": "string (VISUAL ONLY)", "angles": []}]
+}
+
+Generate the complete friendship story video blueprint now in valid JSON format only:`;
+}
+
+// Lost Pet Reunion Template - STANDARD (with narration + background music)
+export function videoGenerationPromptLostPetReunionStandard(
+  userPrompt: string,
+  style: string,
+  durationInSecs: number,
+  aspectRatio: string
+) {
+  return `You are a professional video director creating EMOTIONALLY POWERFUL REUNION videos about lost pets finding their way back to their families.
+
+## Your Task
+Generate a complete video blueprint in JSON format for a TEAR-JERKING story about a pet reuniting with their family after being lost. This video will use TEXT-TO-SPEECH NARRATION and BACKGROUND MUSIC.
+
+## CRITICAL: GENERATE A UNIQUE STORY EVERY TIME
+- You MUST create a completely ORIGINAL and UNIQUE reunion story each time
+- Choose DIFFERENT pets - not just dogs, consider cats, birds, horses, rabbits
+- Vary HOW they got lost - natural disaster, theft, accident, escape
+- Change the TIME apart - days, weeks, months, years
+- HOW they find each other should be unique each time
+- The reunion should feel fresh and emotionally devastating in a new way
+
+## IMPORTANT: Narration-Based Audio
+- This video uses TEXT-TO-SPEECH for narration - write compelling NARRATION text for each scene
+- Background music will be added separately - DO NOT describe music in the videoPrompt
+- The videoPrompt should focus ONLY on visual animation, NOT audio
+
+## Niche Guidelines (use as inspiration, create something unique):
+${userPrompt}
+
+## Video Style: ${style}
+## Duration: ${durationInSecs} seconds
+## Aspect Ratio: ${aspectRatio}
+
+## Narrative Arc Framework:
+
+1. **Happy Life Before**: Establish the bond
+2. **The Separation**: How they were lost
+3. **Search & Grief**: Looking everywhere
+4. **Life Without Them**: The void
+5. **The Discovery**: Finding them again
+6. **The Reunion**: EMOTIONAL PEAK - recognition, running, embrace
+7. **Together Again**: Restored happiness
+
+## Output Requirements
+
+### Characters
+- **name**: Identifier (e.g., "Lost Dog Buddy", "Heartbroken Owner Sarah")
+- **imagePrompt**: DETAILED visual (150-250 words)
+- **voiceProfile**: Empty string ""
+
+### Scenes
+Generate ${Math.ceil(durationInSecs / 8)} to ${Math.ceil(durationInSecs / 6)} scenes.
+- **narration**: EMOTIONAL narration (15-30 words) - spoken via TTS - THE REUNION NARRATION MUST BE POWERFUL
+- **videoPrompt**: VISUAL ANIMATION ONLY - NO audio
+
+## JSON Output Structure
+
+{
+  "title": "string",
+  "characters": [{"name": "string", "imagePrompt": "string", "voiceProfile": ""}],
+  "scenes": [{"index": 0, "charactersInTheScene": [], "narration": "string", "imagePrompt": "string", "videoPrompt": "string (VISUAL ONLY)", "angles": []}]
+}
+
+Generate the complete reunion story video blueprint now in valid JSON format only:`;
+}
+
+// Stray Transformation Template - STANDARD (with narration + background music)
+export function videoGenerationPromptStrayTransformationStandard(
+  userPrompt: string,
+  style: string,
+  durationInSecs: number,
+  aspectRatio: string
+) {
+  return `You are a professional video director creating POWERFUL TRANSFORMATION videos about stray animals being rescued and rehabilitated.
+
+## Your Task
+Generate a complete video blueprint in JSON format for a STUNNING BEFORE-AND-AFTER story of a neglected stray animal transformed through love and care. This video will use TEXT-TO-SPEECH NARRATION and BACKGROUND MUSIC.
+
+## CRITICAL: GENERATE A UNIQUE STORY EVERY TIME
+- You MUST create a completely ORIGINAL and UNIQUE transformation story each time
+- Choose DIFFERENT stray animals - not just dogs, consider cats, horses, donkeys, goats, pigs, rabbits, birds
+- Vary the CONDITION - matted fur, malnutrition, injuries, skin conditions, blindness, extreme fear
+- The RESCUER should be different each time
+- Create DIFFERENT rescue locations - urban streets, abandoned buildings, forests, farms
+- The transformation journey should highlight unique challenges each time
+
+## IMPORTANT: Narration-Based Audio
+- This video uses TEXT-TO-SPEECH for narration - write compelling NARRATION text for each scene
+- Background music will be added separately - DO NOT describe music in the videoPrompt
+- The videoPrompt should focus ONLY on visual animation, NOT audio
+
+## Niche Guidelines (use as inspiration, create something unique):
+${userPrompt}
+
+## Video Style: ${style}
+## Duration: ${durationInSecs} seconds
+## Aspect Ratio: ${aspectRatio}
+
+## Narrative Arc Framework:
+
+1. **Street Life Reality**: The harsh before
+2. **The Rescue Moment**: Being found
+3. **First Care**: Initial treatment
+4. **Transformation Begins**: Physical change
+5. **Personality Emerges**: Emotional change
+6. **The Beautiful After**: Stunning transformation
+7. **Forever Home**: Happy ending
+
+## Output Requirements
+
+### Characters
+- **name**: Identifier (e.g., "Neglected Stray Hope", "Kind Rescuer")
+- **imagePrompt**: DETAILED visual showing BOTH before and after states (150-250 words)
+- **voiceProfile**: Empty string ""
+
+### Scenes
+Generate ${Math.ceil(durationInSecs / 8)} to ${Math.ceil(durationInSecs / 6)} scenes.
+- **narration**: POWERFUL narration (15-30 words) - spoken via TTS
+- **videoPrompt**: VISUAL ANIMATION ONLY - NO audio
+
+## JSON Output Structure
+
+{
+  "title": "string",
+  "characters": [{"name": "string", "imagePrompt": "string", "voiceProfile": ""}],
+  "scenes": [{"index": 0, "charactersInTheScene": [], "narration": "string", "imagePrompt": "string", "videoPrompt": "string (VISUAL ONLY)", "angles": []}]
+}
+
+Generate the complete transformation story video blueprint now in valid JSON format only:`;
+}
+
+
+// ==========================================
+// TEMPLATE MAPPINGS
+// ==========================================
+
+// Map template IDs to their STANDARD prompt functions (default for templates)
 export const templatePromptFunctions: Record<string, (userPrompt: string, style: string, durationInSecs: number, aspectRatio: string) => string> = {
-  "human-rescuing-animals": videoGenerationPromptHumanRescuingAnimals,
-  "animal-asking-help": videoGenerationPromptAnimalAskingHelp,
-  "animal-saving-humans": videoGenerationPromptAnimalSavingHumans,
-  "animal-friendship": videoGenerationPromptAnimalFriendship,
-  "lost-pet-reunion": videoGenerationPromptLostPetReunion,
-  "stray-transformation": videoGenerationPromptStrayTransformation,
+  "animal-encounters": videoGenerationPromptAnimalEncountersStandard,
+  "human-rescuing-animals": videoGenerationPromptHumanRescuingAnimalsStandard,
+  "animal-asking-help": videoGenerationPromptAnimalAskingHelpStandard,
+  "animal-saving-humans": videoGenerationPromptAnimalSavingHumansStandard,
+  "animal-friendship": videoGenerationPromptAnimalFriendshipStandard,
+  "lost-pet-reunion": videoGenerationPromptLostPetReunionStandard,
+  "stray-transformation": videoGenerationPromptStrayTransformationStandard,
+};
+
+// Map template IDs to their PREMIUM prompt functions (for premium model users)
+export const templatePromptFunctionsPremium: Record<string, (userPrompt: string, style: string, durationInSecs: number, aspectRatio: string) => string> = {
+  "animal-encounters": videoGenerationPromptAnimalEncountersPremium,
+  "human-rescuing-animals": videoGenerationPromptHumanRescuingAnimalsPremium,
+  "animal-asking-help": videoGenerationPromptAnimalAskingHelpPremium,
+  "animal-saving-humans": videoGenerationPromptAnimalSavingHumansPremium,
+  "animal-friendship": videoGenerationPromptAnimalFriendshipPremium,
+  "lost-pet-reunion": videoGenerationPromptLostPetReunionPremium,
+  "stray-transformation": videoGenerationPromptStrayTransformationPremium,
 };
 
 // Get the appropriate prompt function for a template
