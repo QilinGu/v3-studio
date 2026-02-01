@@ -52,6 +52,7 @@ export default function AdminPage() {
   const [subscriptionFilter, setSubscriptionFilter] = useState<SubscriptionFilter>("all");
   const [adminFilter, setAdminFilter] = useState<AdminFilter>("all");
   const [selectedUser, setSelectedUser] = useState<SelectedUser>(null);
+  const [showUsers, setShowUsers] = useState(true);
 
   // Bulk email state
   const [showBulkEmail, setShowBulkEmail] = useState(false);
@@ -208,15 +209,27 @@ export default function AdminPage() {
 
       {/* Users Section */}
       <div className="p-6 bg-gradient-to-r from-[#1E1E2D] via-[#1A1A24] to-[#101014] rounded-xl shadow-md border border-white/10">
-        <div className="flex items-center gap-2 mb-6">
-          <Users className="h-5 w-5 text-yellow-500" />
-          <h2 className="text-xl font-semibold text-white">
-            Users ({allUsers?.length ?? 0})
-          </h2>
-        </div>
+        <button
+          onClick={() => setShowUsers(!showUsers)}
+          className="flex items-center justify-between w-full"
+        >
+          <div className="flex items-center gap-2">
+            <Users className="h-5 w-5 text-yellow-500" />
+            <h2 className="text-xl font-semibold text-white">
+              Users ({allUsers?.length ?? 0})
+            </h2>
+          </div>
+          {showUsers ? (
+            <ChevronUp className="h-5 w-5 text-gray-400" />
+          ) : (
+            <ChevronDown className="h-5 w-5 text-gray-400" />
+          )}
+        </button>
 
+        {showUsers && (
+          <>
         {/* Filters and Search */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row gap-4 mb-6 mt-6">
           {/* Search */}
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -353,6 +366,8 @@ export default function AdminPage() {
               </div>
             ))}
           </div>
+        )}
+          </>
         )}
       </div>
 
