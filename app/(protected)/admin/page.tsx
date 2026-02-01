@@ -2,10 +2,11 @@
 
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import { useQuery } from "convex/react";
-import { ShieldX, Loader2, Users, Search, ChevronDown, ChevronUp, Video, Image as ImageIcon, Play } from "lucide-react";
+import { useQuery, useAction } from "convex/react";
+import { ShieldX, Loader2, Users, Search, ChevronDown, ChevronUp, Video, Image as ImageIcon, Play, Mail, Send, Check, X } from "lucide-react";
 import { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -51,6 +52,24 @@ export default function AdminPage() {
   const [subscriptionFilter, setSubscriptionFilter] = useState<SubscriptionFilter>("all");
   const [adminFilter, setAdminFilter] = useState<AdminFilter>("all");
   const [selectedUser, setSelectedUser] = useState<SelectedUser>(null);
+
+  // Bulk email state
+  const [showBulkEmail, setShowBulkEmail] = useState(false);
+  const [emailSubject, setEmailSubject] = useState("");
+  const [emailBody, setEmailBody] = useState("");
+  const [isMarkdown, setIsMarkdown] = useState(true);
+  const [sendToAll, setSendToAll] = useState(true);
+  const [selectedUserIds, setSelectedUserIds] = useState<Set<Id<"users">>>(new Set());
+  const [isSending, setIsSending] = useState(false);
+  const [emailResult, setEmailResult] = useState<{
+    success: boolean;
+    total: number;
+    sent: number;
+    failed: number;
+    details?: any[];
+  } | null>(null);
+
+  const sendBulkEmail = useAction(api.emails.sendBulkEmail);
 
   // Fetch videos and ads for the selected user
   const userVideos = useQuery(
@@ -107,6 +126,57 @@ export default function AdminPage() {
 
   const toggleSortOrder = () => {
     setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+  };
+
+  const toggleUserSelection = (userId: Id<"users">) => {
+    setSelectedUserIds((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(userId)) {
+        newSet.delete(userId);
+      } else {
+        newSet.add(userId);
+      }
+      return newSet;
+    });
+  };
+
+  const selectAllFiltered = () => {
+    const allIds = new Set(filteredAndSortedUsers.map((u) => u._id));
+    setSelectedUserIds(allIds);
+  };
+
+  const clearSelection = () => {
+    setSelectedUserIds(new Set());
+  };
+
+  const handleSendBulkEmail = async () => {
+    if (!emailSubject.trim() || !emailBody.trim()) {
+      return;
+    }
+
+    setIsSending(true);
+    setEmailResult(null);
+
+    try {
+      const result = await sendBulkEmail({
+        subject: emailSubject,
+        body: emailBody,
+        isMarkdown,
+        sendToAll,
+        userIds: sendToAll ? undefined : Array.from(selectedUserIds),
+      });
+      setEmailResult(result);
+    } catch (error) {
+      setEmailResult({
+        success: false,
+        total: 0,
+        sent: 0,
+        failed: 0,
+        details: [{ error: String(error) }],
+      });
+    } finally {
+      setIsSending(false);
+    }
   };
 
   // Loading state
@@ -282,6 +352,252 @@ export default function AdminPage() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+      </div>
+
+      {/* Bulk Email Section */}
+      <div className="mt-6 p-6 bg-gradient-to-r from-[#1E1E2D] via-[#1A1A24] to-[#101014] rounded-xl shadow-md border border-white/10">
+        <button
+          onClick={() => setShowBulkEmail(!showBulkEmail)}
+          className="flex items-center justify-between w-full"
+        >
+          <div className="flex items-center gap-2">
+            <Mail className="h-5 w-5 text-blue-400" />
+            <h2 className="text-xl font-semibold text-white">Bulk Email</h2>
+          </div>
+          {showBulkEmail ? (
+            <ChevronUp className="h-5 w-5 text-gray-400" />
+          ) : (
+            <ChevronDown className="h-5 w-5 text-gray-400" />
+          )}
+        </button>
+
+        {showBulkEmail && (
+          <div className="mt-6 space-y-4">
+            {/* Send To Options */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex items-center gap-4">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="sendTo"
+                    checked={sendToAll}
+                    onChange={() => setSendToAll(true)}
+                    className="w-4 h-4 accent-blue-500"
+                  />
+                  <span className="text-white">Send to all users ({allUsers?.filter(u => u.email).length ?? 0} with email)</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="sendTo"
+                    checked={!sendToAll}
+                    onChange={() => setSendToAll(false)}
+                    className="w-4 h-4 accent-blue-500"
+                  />
+                  <span className="text-white">Send to selected ({selectedUserIds.size})</span>
+                </label>
+              </div>
+            </div>
+
+            {/* User Selection (when not sending to all) */}
+            {!sendToAll && (
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-gray-400 text-sm">Select recipients from filtered list</span>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={selectAllFiltered}
+                      className="text-xs"
+                    >
+                      Select All Filtered ({filteredAndSortedUsers.filter(u => u.email).length})
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={clearSelection}
+                      className="text-xs"
+                    >
+                      Clear
+                    </Button>
+                  </div>
+                </div>
+                <div className="max-h-48 overflow-y-auto space-y-1">
+                  {filteredAndSortedUsers.filter(u => u.email).map((u) => (
+                    <label
+                      key={u._id}
+                      className="flex items-center gap-3 p-2 rounded hover:bg-white/5 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedUserIds.has(u._id)}
+                        onChange={() => toggleUserSelection(u._id)}
+                        className="w-4 h-4 accent-blue-500"
+                      />
+                      <span className="text-white text-sm">{u.name}</span>
+                      <span className="text-gray-500 text-xs">{u.email}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Email Subject */}
+            <div>
+              <label className="block text-gray-400 text-sm mb-2">Subject</label>
+              <Input
+                value={emailSubject}
+                onChange={(e) => setEmailSubject(e.target.value)}
+                placeholder="Enter email subject..."
+                className="bg-white/5 border-white/10 text-white placeholder:text-gray-500"
+              />
+            </div>
+
+            {/* Format Toggle */}
+            <div className="flex items-center gap-4">
+              <span className="text-gray-400 text-sm">Body format:</span>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="format"
+                  checked={isMarkdown}
+                  onChange={() => setIsMarkdown(true)}
+                  className="w-4 h-4 accent-blue-500"
+                />
+                <span className="text-white text-sm">Markdown</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="format"
+                  checked={!isMarkdown}
+                  onChange={() => setIsMarkdown(false)}
+                  className="w-4 h-4 accent-blue-500"
+                />
+                <span className="text-white text-sm">HTML</span>
+              </label>
+            </div>
+
+            {/* Email Body */}
+            <div>
+              <label className="block text-gray-400 text-sm mb-2">
+                Body {isMarkdown ? "(Markdown)" : "(HTML)"}
+                <span className="text-gray-500 ml-2">
+                  - &quot;Hi [name]&quot; greeting and footer will be added automatically
+                </span>
+              </label>
+              <Textarea
+                value={emailBody}
+                onChange={(e) => setEmailBody(e.target.value)}
+                placeholder={
+                  isMarkdown
+                    ? "Write your message in Markdown...\n\n**Bold**, *italic*, [links](url)"
+                    : "Write your message in HTML...\n\n<p>Paragraph</p>\n<strong>Bold</strong>"
+                }
+                className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 min-h-[200px] font-mono text-sm"
+              />
+            </div>
+
+            {/* Preview Section */}
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-gray-400 text-sm mb-3">Preview (for a user named &quot;John&quot;)</h4>
+              <div className="p-4 rounded bg-white text-gray-800 text-sm">
+                <p className="mb-3">Hi John,</p>
+                {isMarkdown ? (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: emailBody
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/__(.*?)__/g, '<strong>$1</strong>')
+                        .replace(/\*(?!\*)(.*?)\*/g, '<em>$1</em>')
+                        .replace(/_(?!_)(.*?)_/g, '<em>$1</em>')
+                        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color: #4F46E5;">$1</a>')
+                        .replace(/\n\n/g, '</p><p>')
+                        .replace(/\n/g, '<br>') || '<span class="text-gray-400">[Your message here]</span>'
+                    }}
+                  />
+                ) : (
+                  <div dangerouslySetInnerHTML={{ __html: emailBody || '<span class="text-gray-400">[Your message here]</span>' }} />
+                )}
+                <p className="mt-6">
+                  Warm regards,<br />
+                  <strong>Debasish</strong><br />
+                  <span className="text-gray-500">Creator of V3 Studio</span><br />
+                  <a href="https://www.v3-studio.com" className="text-blue-600">www.v3-studio.com</a>
+                </p>
+                <hr className="my-4 border-gray-200" />
+                <p className="text-gray-500 text-xs">
+                  Please do not reply to this email. For questions or feedback, contact us at{" "}
+                  <a href="mailto:team@v3-studio.com" className="text-blue-600">team@v3-studio.com</a>{" "}
+                  or visit our <a href="https://www.v3-studio.com/contact-us" className="text-blue-600">contact page</a>.
+                </p>
+              </div>
+            </div>
+
+            {/* Send Button */}
+            <div className="flex items-center gap-4">
+              <Button
+                onClick={handleSendBulkEmail}
+                disabled={isSending || !emailSubject.trim() || !emailBody.trim() || (!sendToAll && selectedUserIds.size === 0)}
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                {isSending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="h-4 w-4 mr-2" />
+                    Send Email ({sendToAll ? allUsers?.filter(u => u.email).length ?? 0 : selectedUserIds.size} recipients)
+                  </>
+                )}
+              </Button>
+            </div>
+
+            {/* Results */}
+            {emailResult && (
+              <div
+                className={`p-4 rounded-lg border ${
+                  emailResult.success
+                    ? "bg-green-500/10 border-green-500/30"
+                    : "bg-red-500/10 border-red-500/30"
+                }`}
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  {emailResult.success ? (
+                    <Check className="h-5 w-5 text-green-500" />
+                  ) : (
+                    <X className="h-5 w-5 text-red-500" />
+                  )}
+                  <span className={emailResult.success ? "text-green-400" : "text-red-400"}>
+                    {emailResult.success ? "Emails sent successfully!" : "Some emails failed to send"}
+                  </span>
+                </div>
+                <div className="text-sm text-gray-400 space-y-1">
+                  <p>Total: {emailResult.total}</p>
+                  <p className="text-green-400">Sent: {emailResult.sent}</p>
+                  {emailResult.failed > 0 && (
+                    <p className="text-red-400">Failed: {emailResult.failed}</p>
+                  )}
+                </div>
+                {emailResult.details && emailResult.details.length > 0 && emailResult.failed > 0 && (
+                  <div className="mt-3 max-h-32 overflow-y-auto">
+                    <p className="text-gray-400 text-xs mb-1">Failed emails:</p>
+                    {emailResult.details
+                      .filter((d) => d.status === "failed")
+                      .map((d, i) => (
+                        <p key={i} className="text-red-400 text-xs">
+                          {d.email}: {d.error}
+                        </p>
+                      ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
       </div>

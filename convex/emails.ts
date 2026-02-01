@@ -149,6 +149,121 @@ export const getUserCount = action({
   },
 });
 
+// Send bulk email to selected users (admin only)
+export const sendBulkEmail = action({
+  args: {
+    subject: v.string(),
+    body: v.string(),
+    isMarkdown: v.boolean(),
+    userIds: v.optional(v.array(v.id("users"))),
+    sendToAll: v.boolean(),
+  },
+  handler: async (ctx, args) => {
+    // Get users - either all or selected
+    let users;
+    if (args.sendToAll) {
+      users = await ctx.runQuery(internal.admin.getAllUsers);
+    } else if (args.userIds && args.userIds.length > 0) {
+      const allUsers = await ctx.runQuery(internal.admin.getAllUsers);
+      users = allUsers.filter((u) => args.userIds!.includes(u._id));
+    } else {
+      return {
+        success: false,
+        error: "No users selected",
+        total: 0,
+        sent: 0,
+        failed: 0,
+      };
+    }
+
+    const results = {
+      success: true,
+      total: 0,
+      sent: 0,
+      failed: 0,
+      details: [] as any[],
+    };
+
+    // Convert markdown to HTML if needed (basic conversion)
+    let bodyHtml = args.body;
+    if (args.isMarkdown) {
+      // Basic markdown to HTML conversion
+      bodyHtml = args.body
+        // Bold: **text** or __text__
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/__(.*?)__/g, '<strong>$1</strong>')
+        // Italic: *text* or _text_
+        .replace(/\*(?!\*)(.*?)\*/g, '<em>$1</em>')
+        .replace(/_(?!_)(.*?)_/g, '<em>$1</em>')
+        // Links: [text](url)
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color: #4F46E5; text-decoration: none;">$1</a>')
+        // Line breaks
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g, '<br>');
+      bodyHtml = `<p>${bodyHtml}</p>`;
+    }
+
+    for (const user of users) {
+      if (user.email) {
+        results.total++;
+
+        const html = `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <div style="color: #374151; line-height: 1.6;">
+              <p>Hi ${user.name},</p>
+              ${bodyHtml}
+              <p style="margin-top: 30px;">Warm regards,<br><strong>Debasish</strong><br><span style="color: #6B7280;">Creator of V3 Studio</span><br><a href="https://www.v3-studio.com" style="color: #4F46E5; text-decoration: none;">www.v3-studio.com</a></p>
+              <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
+              <p style="color: #999; font-size: 12px;">Please do not reply to this email. For questions or feedback, contact us at <a href="mailto:team@v3-studio.com" style="color: #4F46E5;">team@v3-studio.com</a> or visit our <a href="https://www.v3-studio.com/contact-us" style="color: #4F46E5;">contact page</a>.</p>
+            </div>
+          </div>
+        `;
+
+        try {
+          const { data, error } = await resend.emails.send({
+            from: "V3 Studio <no-reply@notify.v3-studio.com>",
+            to: user.email,
+            subject: args.subject,
+            html: html,
+          });
+
+          if (error) {
+            results.failed++;
+            results.details.push({
+              email: user.email,
+              name: user.name,
+              status: "failed",
+              error: error.message,
+            });
+          } else {
+            results.sent++;
+            results.details.push({
+              email: user.email,
+              name: user.name,
+              status: "sent",
+              id: data?.id,
+            });
+          }
+
+          // Rate limit protection
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        } catch (error) {
+          results.failed++;
+          results.details.push({
+            email: user.email,
+            name: user.name,
+            status: "failed",
+            error: String(error),
+          });
+        }
+      }
+    }
+
+    results.success = results.failed === 0;
+    return results;
+  },
+});
+
 // Send welcome email to new users
 export const sendWelcomeEmail = internalAction({
   args: {
