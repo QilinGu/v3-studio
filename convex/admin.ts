@@ -1,9 +1,96 @@
 import { v } from "convex/values";
-import { action, internalQuery, internalMutation } from "./_generated/server";
+import { action, query, internalQuery, internalMutation } from "./_generated/server";
 import { internal } from "./_generated/api";
 
+// Helper function to verify admin access
+async function verifyAdminAccess(ctx: any) {
+  const identity = await ctx.auth.getUserIdentity();
+  if (!identity) {
+    throw new Error("Not authenticated");
+  }
 
-// Internal mutation to get users with missing emails
+  const currentUser = await ctx.db
+    .query("users")
+    .withIndex("by_subject", (q: any) => q.eq("subject", identity.subject))
+    .unique();
+
+  if (!currentUser?.isAdmin) {
+    throw new Error("Not authorized - admin access required");
+  }
+
+  return currentUser;
+}
+
+// Public query to get all users (admin only)
+export const getAllUsersForAdmin = query({
+  args: {},
+  handler: async (ctx) => {
+    await verifyAdminAccess(ctx);
+
+    const users = await ctx.db
+      .query('users')
+      .collect();
+
+    return users.map(user => ({
+      _id: user._id,
+      _creationTime: user._creationTime,
+      name: user.name,
+      email: user.email,
+      credits: user.credits,
+      subscriptionProductId: user.subscriptionProductId,
+      onboardingDone: user.onboardingDone,
+      isAdmin: user.isAdmin,
+    }));
+  },
+});
+
+// Get videos for a specific user (admin only)
+export const getUserVideosForAdmin = query({
+  args: { userId: v.id("users") },
+  handler: async (ctx, args) => {
+    await verifyAdminAccess(ctx);
+
+    const videos = await ctx.db
+      .query("videos")
+      .withIndex("by_userId", (q) => q.eq("userId", args.userId))
+      .collect();
+
+    return videos.map(video => ({
+      _id: video._id,
+      _creationTime: video._creationTime,
+      title: video.title,
+      prompt: video.prompt,
+      style: video.style,
+      aspectRatio: video.aspectRatio,
+      videoUrl: video.videoUrl,
+      thumbnailUrl: video.thumbnailUrl,
+      creditsUsed: video.creditsUsed,
+    }));
+  },
+});
+
+// Get ads for a specific user (admin only)
+export const getUserAdsForAdmin = query({
+  args: { userId: v.id("users") },
+  handler: async (ctx, args) => {
+    await verifyAdminAccess(ctx);
+
+    const ads = await ctx.db
+      .query("ads")
+      .withIndex("by_userId", (q) => q.eq("userId", args.userId))
+      .collect();
+
+    return ads.map(ad => ({
+      _id: ad._id,
+      description: ad.description,
+      adImageUrl: ad.adImageUrl,
+      adVideoUrl: ad.adVideoUrl,
+      aspectRatio: ad.aspectRatio,
+    }));
+  },
+});
+
+// Internal query to get all users
 export const getAllUsers = internalQuery({
   args: {},
   handler: async (ctx) => {

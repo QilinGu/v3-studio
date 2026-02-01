@@ -210,6 +210,7 @@ export default defineSchema({
     polarCustomerId: v.string(),
     subscriptionProductId: v.optional(v.string()),
     onboardingDone: v.optional(v.boolean()),
+    isAdmin: v.optional(v.boolean()),
   }).index('by_subject', ['subject']),
 
   ads: defineTable({
