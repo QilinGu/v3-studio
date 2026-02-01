@@ -40,7 +40,10 @@ type SelectedUser = {
 
 export default function AdminPage() {
   const user = useQuery(api.user.getUser);
-  const allUsers = useQuery(api.admin.getAllUsersForAdmin);
+  const allUsers = useQuery(
+    api.admin.getAllUsersForAdmin,
+    user?.isAdmin ? {} : "skip"
+  );
 
   const [searchQuery, setSearchQuery] = useState("");
   const [sortField, setSortField] = useState<SortField>("createdAt");
@@ -62,7 +65,7 @@ export default function AdminPage() {
   const filteredAndSortedUsers = useMemo(() => {
     if (!allUsers) return [];
 
-    let filtered = allUsers.filter((u) => {
+    const filtered = allUsers.filter((u) => {
       const matchesSearch =
         u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (u.email?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
