@@ -89,17 +89,34 @@ export default function DashboardPage() {
           }>
             <Button
   id="start-creating-button"
-  className="mt-4 bg-gradient-to-r from-[#45EC82] to-[#75CEFC] text-black font-semibold shadow-lg shadow-[#45EC82]/20 hover:scale-[1.02] hover:shadow-[#75CEFC]/40 transition-all"
+  className="
+    mt-4
+    bg-gradient-to-r from-[#45EC82] to-[#75CEFC]
+    text-black
+    font-semibold
+    shadow-lg shadow-[#45EC82]/20
+    hover:scale-[1.02]
+    transition-all
+  "
 >
   ✨ Start Creating
 </Button>
-
           </Link>
           <Button
-            onClick={() => setTour(true)}
-            className="mt-4 md:mx-4 bg-gradient-to-r from-[#45EC82] to-[#75CEFC] text-black font-semibold rounded-lg hover:opacity-90 transition-opacity">
-            Start guided tour
-          </Button>
+  onClick={() => setTour(true)}
+  variant="outline"
+  className="
+    mt-4 md:mx-4
+    border-white/20
+    text-white/70
+    hover:text-white
+    hover:border-white/40
+    bg-transparent
+  "
+>
+  Take a guided tour
+</Button>
+
         </div>
 
         {!user?.subscriptionProductId && (
