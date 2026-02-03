@@ -89,16 +89,7 @@ export default function DashboardPage() {
           }>
             <Button
   id="start-creating-button"
-  className="
-    mt-4
-    bg-gradient-to-r from-[#45EC82] to-[#75CEFC]
-    text-black
-    font-semibold
-    shadow-lg shadow-[#45EC82]/20
-    hover:scale-[1.02]
-    hover:shadow-[#75CEFC]/40
-    transition-all
-  "
+  className="mt-4 bg-gradient-to-r from-[#45EC82] to-[#75CEFC] text-black font-semibold shadow-lg shadow-[#45EC82]/20 hover:scale-[1.02] hover:shadow-[#75CEFC]/40 transition-all"
 >
   ✨ Start Creating
 </Button>
