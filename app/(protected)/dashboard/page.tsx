@@ -17,35 +17,6 @@ export default function DashboardPage() {
 
   const [tour, setTour] = useState(false);
 
-  /*
-  const seedPrompt = useMutation(api.prompt.seedPrompt)
-
-  const removePromptVariationDuplicates = useMutation(api.prompt.removePromptVariationDuplicates)
-
-
-  useEffect(() => {
-    const seedAllPrompts = async () => {
-      try {
-        // Sequential version (safer, avoids rate limits)
-        for (const [category, prompts] of Object.entries(promptVariations)) {
-          for (const prompt of prompts) {
-            await seedPrompt({ prompt, category });
-          }
-        }
-
-        await removePromptVariationDuplicates();
-
-        console.log("✅ All prompts seeded successfully!");
-      } catch (err) {
-        console.error("❌ Error seeding prompts:", err);
-      }
-    };
-
-    seedAllPrompts();
-  }, [seedPrompt, removePromptVariationDuplicates]);
-
-*/
-
   useEffect(() => {
     tourRef.current = driver({
       popoverClass: 'driverjs-theme',
@@ -59,7 +30,7 @@ export default function DashboardPage() {
       popover: {
         title: "Start here 👋",
         description:
-          "Click here to generate your first AI video. We’ll guide you step by step.",
+          "Click here to generate your first AI video. We'll guide you step by step.",
         side: "bottom",
         align: "start",
       },
@@ -82,41 +53,62 @@ export default function DashboardPage() {
           <p className="text-gray-300 mt-2 leading-relaxed">
             Lights, camera, AI! 🚀 Instantly transform your text or images into stunning cinematic videos. Create stories that move — literally.
           </p>
-          <Link href={
-            tour
-              ? { pathname: "/ai-tools/ai-video", query: { tour: 'true' } }
-              : { pathname: "/ai-tools/ai-video" }
-          }>
-            <Button
-  id="start-creating-button"
-  className="
-    mt-4
-    bg-gradient-to-r from-[#45EC82] to-[#75CEFC]
-    text-black
-    font-semibold
-    shadow-lg shadow-[#45EC82]/20
-    hover:scale-[1.02]
-    transition-all
-  "
->
-  ✨ Start Creating
-</Button>
-          </Link>
-          <Button
-  onClick={() => setTour(true)}
-  variant="outline"
-  className="
-    mt-4 md:mx-4
-    border-white/20
-    text-white/70
-    hover:text-white
-    hover:border-white/40
-    bg-transparent
-  "
->
-  Take a guided tour
-</Button>
+          
+          {/* Improved button layout with clear visual hierarchy */}
+          <div className="flex flex-wrap items-center gap-3 mt-5">
+            {/* Primary CTA - Bold and prominent */}
+            <Link href={
+              tour
+                ? { pathname: "/ai-tools/ai-video", query: { tour: 'true' } }
+                : { pathname: "/ai-tools/ai-video" }
+            }>
+              <Button
+                id="start-creating-button"
+                className="
+                  px-6 py-2.5
+                  bg-gradient-to-r from-[#45EC82] to-[#75CEFC]
+                  text-black
+                  font-semibold
+                  shadow-lg shadow-[#45EC82]/30
+                  hover:shadow-xl hover:shadow-[#45EC82]/40
+                  hover:scale-[1.03]
+                  active:scale-[0.98]
+                  transition-all duration-200
+                "
+              >
+                ✨ Start Creating
+              </Button>
+            </Link>
 
+            {/* Secondary action - Subtle text link style */}
+            <button
+              onClick={() => setTour(true)}
+              className="
+                group
+                flex items-center gap-1.5
+                px-3 py-2
+                text-sm
+                text-white/50
+                hover:text-white/80
+                transition-colors duration-200
+              "
+            >
+              <svg 
+                className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={1.5} 
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
+                />
+              </svg>
+              Take a guided tour
+            </button>
+          </div>
         </div>
 
         {!user?.subscriptionProductId && (
