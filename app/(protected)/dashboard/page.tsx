@@ -138,13 +138,6 @@ export default function DashboardPage() {
             <p className="text-white text-sm opacity-70">
               Instantly turn your script or idea into a visual storyboard powered by AI. Perfect for pre-production planning.
             </p>
-            <Link href="ai-tools/ai-video">
-              <Button
-                id='storyboard-button'
-                className="bg-black hover:bg-white hover:text-black text-white mt-2 transition-all">
-                Create Storyboard
-              </Button>
-            </Link>
           </div>
         </div>
 
@@ -162,11 +155,6 @@ export default function DashboardPage() {
             <p className="text-white text-sm opacity-70">
               Create cinematic-quality video scenes in seconds with intelligent automation and stunning visuals.
             </p>
-            <Link href="ai-tools/ai-video">
-              <Button className="bg-black hover:bg-white hover:text-black text-white mt-2 transition-all">
-                Start Creating
-              </Button>
-            </Link>
           </div>
         </div>
       </div>
@@ -187,11 +175,6 @@ export default function DashboardPage() {
             <p className="text-white text-sm opacity-70">
               Produce engaging short-form videos using AI-powered editing and transitions.
             </p>
-            <Link href="/ai-tools/ai-video">
-              <Button className="bg-black hover:bg-white hover:text-black text-white mt-2 transition-all">
-                Create Now
-              </Button>
-            </Link>
           </div>
         </div>
 
@@ -209,11 +192,6 @@ export default function DashboardPage() {
             <p className="text-white text-sm opacity-70">
               Generate high-converting, professional-grade video ads with cutting-edge AI.
             </p>
-            <Link href="/ai-tools/product-ads">
-              <Button className="bg-black hover:bg-white hover:text-black text-white mt-2 transition-all">
-                Create Now
-              </Button>
-            </Link>
           </div>
         </div>
 
@@ -231,11 +209,6 @@ export default function DashboardPage() {
             <p className="text-white text-sm opacity-70">
               Create cinematic product visuals with AI generation.
             </p>
-            <Link href="/ai-tools/product-ads">
-              <Button className="bg-black hover:bg-white hover:text-black text-white mt-2 transition-all">
-                Create Now
-              </Button>
-            </Link>
           </div>
         </div>
       </div>
