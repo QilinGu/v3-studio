@@ -88,10 +88,21 @@ export default function DashboardPage() {
               : { pathname: "/ai-tools/ai-video" }
           }>
             <Button
-              id='start-creating-button'
-              className="mt-4 text-white border-white/30 hover:bg-white hover:text-black transition-all bg-transparent border">
-              ✨ Start Creating
-            </Button>
+  id="start-creating-button"
+  className="
+    mt-4
+    bg-gradient-to-r from-[#45EC82] to-[#75CEFC]
+    text-black
+    font-semibold
+    shadow-lg shadow-[#45EC82]/20
+    hover:scale-[1.02]
+    hover:shadow-[#75CEFC]/40
+    transition-all
+  "
+>
+  ✨ Start Creating
+</Button>
+
           </Link>
           <Button
             onClick={() => setTour(true)}
