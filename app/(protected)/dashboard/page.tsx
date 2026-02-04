@@ -84,7 +84,7 @@ export default function DashboardPage() {
           </p>
           
           {/* Improved button layout with clear visual hierarchy */}
-          <div className="flex flex-wrap justify-between items-center gap-3 mt-5">
+          <div className="flex flex-wrap justify-center sm:justify-between items-center gap-3 mt-5">
             {/* Primary CTA - Bold and prominent */}
             <Link href={
               tour
