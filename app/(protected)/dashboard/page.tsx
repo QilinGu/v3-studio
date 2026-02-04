@@ -17,6 +17,35 @@ export default function DashboardPage() {
 
   const [tour, setTour] = useState(false);
 
+   /*
+  const seedPrompt = useMutation(api.prompt.seedPrompt)
+
+  const removePromptVariationDuplicates = useMutation(api.prompt.removePromptVariationDuplicates)
+
+
+  useEffect(() => {
+    const seedAllPrompts = async () => {
+      try {
+        // Sequential version (safer, avoids rate limits)
+        for (const [category, prompts] of Object.entries(promptVariations)) {
+          for (const prompt of prompts) {
+            await seedPrompt({ prompt, category });
+          }
+        }
+
+        await removePromptVariationDuplicates();
+
+        console.log("✅ All prompts seeded successfully!");
+      } catch (err) {
+        console.error("❌ Error seeding prompts:", err);
+      }
+    };
+
+    seedAllPrompts();
+  }, [seedPrompt, removePromptVariationDuplicates]);
+
+*/
+  
   useEffect(() => {
     tourRef.current = driver({
       popoverClass: 'driverjs-theme',
