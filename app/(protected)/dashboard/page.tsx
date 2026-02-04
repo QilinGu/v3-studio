@@ -149,8 +149,6 @@ export default function DashboardPage() {
               </h3>
               <p className="text-sm text-gray-300 mt-2 leading-relaxed">
                 Get <span className="font-semibold text-white">exclusive tools</span>, <span className="font-semibold text-white">faster rendering</span>, and <span className="font-semibold text-white">higher usage limits</span>.
-                <br />
-                Upgrade now and save <span className="font-bold text-yellow-400">20%</span> 🎉
               </p>
             </div>
             <Link href="/billing">
