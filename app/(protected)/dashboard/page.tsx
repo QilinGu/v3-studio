@@ -117,8 +117,8 @@ export default function DashboardPage() {
                 flex items-center gap-1.5
                 px-3 py-2
                 text-sm
-                text-white/50
-                hover:text-white/80
+                text-yellow-500/50
+                hover:text-yellow-500/80
                 transition-colors duration-200
               "
             >
