@@ -119,6 +119,7 @@ export default function DashboardPage() {
                 text-sm
                 text-yellow-400
                 hover:text-yellow-500
+                hover:cursor-pointer
                 transition-colors duration-200
               "
             >
